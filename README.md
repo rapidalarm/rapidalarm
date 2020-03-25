@@ -2,9 +2,9 @@
 
 Ventilator monitor prototype.
 
-![](diagram.svg)
+![](diagram.png)
 
-<iframe width="560" height="315" sandbox="allow-same-origin allow-scripts allow-popups" src="https://peertube.live/videos/embed/13f2b566-4c56-4bdf-a5aa-632a2e33fda7" frameborder="0" allowfullscreen></iframe>
+<a href="https://peertube.live/videos/embed/13f2b566-4c56-4bdf-a5aa-632a2e33fda7"><img src="vid.png"/></a>
 
 ![](pic.jpg)
 
