@@ -7,7 +7,7 @@ sample_rate = 100
 rate = 12 # (breaths / min)
 time_inspiration = 2 # (s)
 pressure_level = 20 # peak pressure (cm H20)
-peep = 0 # (cm H20)
+peep = 5 # (cm H20)
 simulated_cycles = 5
 
 lung_compliance = 0.3 # (L / cm H20)
@@ -25,13 +25,13 @@ t = np.linspace(
 
 v_mouth = np.zeros(int(total_cycle_time * sample_rate))
 # rect
-v_mouth[:time_inspiration * sample_rate] = pressure_level
+# v_mouth[:time_inspiration * sample_rate] = pressure_level
 # ramp
-# v_mouth[:time_inspiration * sample_rate] = np.linspace(
-#     0,
-#     pressure_level,
-#     time_inspiration * sample_rate
-# )
+v_mouth[:time_inspiration * sample_rate] = np.linspace(
+    0,
+    pressure_level,
+    time_inspiration * sample_rate
+)
 v_mouth += peep
 v_mouth = np.tile(v_mouth, simulated_cycles)
 
