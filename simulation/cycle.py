@@ -4,14 +4,15 @@ from scipy.signal import lti, lsim
 
 sample_rate = 100
 
-rate = 8 # (breaths / min)
+rate = 12 # (breaths / min)
 time_inspiration = 2 # (s)
 pressure_level = 20 # peak pressure (cm H20)
-peep = 3 # (cm H20)
+peep = 0 # (cm H20)
 simulated_cycles = 5
 
-lung_compliance = 0.2 # (L / cm H20)
-airway_resistance = 2 # (cm H20 / L / s)
+lung_compliance = 0.3 # (L / cm H20)
+# FIXME
+airway_resistance = 0.1 # (cm H20 / L / s)
 
 # ----- generate mouth pressure signal -----
 
@@ -24,13 +25,13 @@ t = np.linspace(
 
 v_mouth = np.zeros(int(total_cycle_time * sample_rate))
 # rect
-# v_mouth[:time_inspiration * sample_rate] = pressure_level
+v_mouth[:time_inspiration * sample_rate] = pressure_level
 # ramp
-v_mouth[:time_inspiration * sample_rate] = np.linspace(
-    0,
-    pressure_level,
-    time_inspiration * sample_rate
-)
+# v_mouth[:time_inspiration * sample_rate] = np.linspace(
+#     0,
+#     pressure_level,
+#     time_inspiration * sample_rate
+# )
 v_mouth += peep
 v_mouth = np.tile(v_mouth, simulated_cycles)
 
@@ -56,18 +57,23 @@ plt.figure(figsize=(5, 8))
 plt.subplot(4, 1, 1)
 plt.plot(t, v_mouth)
 plt.title('Mouth Pressure')
+plt.ylabel('cm H20')
 plt.grid()
 plt.subplot(4, 1, 2)
 plt.plot(t, i_airway)
 plt.title('Airway Flow')
+plt.ylabel('L / s')
 plt.grid()
 plt.subplot(4, 1, 3)
 plt.plot(t, v_lungs)
 plt.title('Lung Pressure')
+plt.ylabel('cm H20')
 plt.grid()
 plt.subplot(4, 1, 4)
 plt.plot(t, q_lungs)
 plt.title('Lung Volume')
+plt.ylabel('L')
+plt.xlabel('time')
 plt.grid()
 plt.tight_layout()
 plt.show()
