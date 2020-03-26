@@ -1,9 +1,16 @@
 - alarm - SFM-27 https://www.youtube.com/watch?v=LLGMlErc0yQ
 - esp8266 bulk US - https://www.ebay.com/itm/5X-ESP8266-ESP-12E-802-11n-WIFI-USB-Development-Board-Arduino-MicroPython-5-Pack/132532596048?hash=item1edb8eed50:g:Z3QAAOSwsnVdyOf-
 
-- esp8266 bulk - https://www.aliexpress.com/item/32665100123.html?spm=a2g0o.productlist.0.0.3ffc15495JaD23&algo_pvid=1e29147f-2a71-40df-94b8-4b58d9622e4f&algo_expid=1e29147f-2a71-40df-94b8-4b58d9622e4f-0&btsid=0ab6d69f15850880382543898e3676&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
-
-- 0.2 Hz
+- esp8266 bulk 
+  - https://www.aliexpress.com/item/32665100123.html?spm=a2g0o.productlist.0.0.3ffc15495JaD23&algo_pvid=1e29147f-2a71-40df-94b8-4b58d9622e4f&algo_expid=1e29147f-2a71-40df-94b8-4b58d9622e4f-0&btsid=0ab6d69f15850880382543898e3676&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
+  
+- esp02 bulk
+  - https://www.mouser.com/ProductDetail/Espressif-Systems/ESP-WROOM-02?qs=sGAEpiMZZMsRr7brxAGoXSSUPDSAjAiVc55QyFq0cPAl59eVNM2ypQ%3D%3D
+  - https://www.digikey.com/product-detail/en/espressif-systems/ESP-WROOM-02/1904-1009-1-ND/8544304
+  
+- esp32 bulk
+  - https://www.mouser.com/ProductDetail/Espressif-Systems/ESP32-SOLO-1?qs=sGAEpiMZZMsRr7brxAGoXSSUPDSAjAiVLQnuuMBfLkMt7n12ghVrZw%3D%3D
+  - https://www.digikey.com/product-detail/en/espressif-systems/ESP32-WROVER/1904-1007-1-ND/8544302
 
 - kivy signed build - https://groups.google.com/forum/#!topic/kivy-users/pBtbg8aSlNo
 - kivy listview update - https://groups.google.com/forum/#!topic/kivy-users/D7kaXll-rj8
