@@ -8,7 +8,7 @@ For `audio.wav`, I get a tidal volume estimate of 1.253 with a standard deviatio
 
 1. high pass audio at 7KHz
 2. take absolute value
-3. sum all samples within each 0.1s window, this is a new 10Hz waveform
+3. sum all samples within each 0.1s window, this is a new 10 samp/s waveform
 4. minimum filter, window size 3
 5. [peak width computation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.peak_widths.html), (need more robust and faster method for micro)
 
