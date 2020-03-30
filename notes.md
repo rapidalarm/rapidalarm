@@ -100,20 +100,20 @@ huge dirs:
 
 ### Things to Order
 - displays
-    - https://www.digikey.com/product-detail/en/lite-on-inc/LTC-4627JF/160-1548-5-ND/408221
+    - 2x - https://www.digikey.com/product-detail/en/lite-on-inc/LTC-4627JF/160-1548-5-ND/408221
 - transducers
-    - https://www.digikey.com/product-detail/en/nxp-usa-inc/MP3V5004GP/MP3V5004GP-ND/2186181
-    - https://www.digikey.com/product-detail/en/nxp-usa-inc/MPXV5004DP/MPXV5004DP-ND/1168429
-    - https://www.digikey.com/product-detail/en/nxp-usa-inc/MP3V5004DP/MP3V5004DP-ND/2186178
+    - 2x - https://www.digikey.com/product-detail/en/nxp-usa-inc/MPXV5010GC7U/MPXV5010GC7U-ND/412949
+    - https://www.digikey.com/product-detail/en/nxp-usa-inc/MPXV7007DP/MPXV7007DP-ND/1168438
+    - https://www.digikey.com/product-detail/en/nxp-usa-inc/MPXV5010DP/MPXV5010DP-ND/531280
 - buzzers
     - https://www.digikey.com/product-detail/en/pui-audio-inc/AI-3035-TWT-3V-R/668-1204-ND/1745457
-    - https://www.digikey.com/product-detail/en/murata-electronics/PKM13EPYH4002-B0/490-4697-ND/1219328
+    - 2x - https://www.digikey.com/product-detail/en/murata-electronics/PKM13EPYH4002-B0/490-4697-ND/1219328
 - microcontrollers
     - https://www.digikey.com/product-detail/en/espressif-systems/ESP32-WROOM-32/1904-1010-1-ND/8544305
-    - https://www.digikey.com/product-detail/en/microchip-technology/ATMEGA328P-PU/ATMEGA328P-PU-ND/1914589
+    - 2x - https://www.digikey.com/product-detail/en/microchip-technology/ATMEGA328P-PU/ATMEGA328P-PU-ND/1914589
     - https://www.digikey.com/product-detail/en/microchip-technology/ATMEGA328P-AUR/ATMEGA328P-AURCT-ND/3789455
 - tactile switch
-    - https://www.digikey.com/product-detail/en/omron-electronics-inc-emc-div/B3FS-1000P/SW423CT-ND/277814
+    - 6x - https://www.digikey.com/product-detail/en/omron-electronics-inc-emc-div/B3FS-1000P/SW423CT-ND/277814
     
 - old stuff, dont order
     - https://www.digikey.com/product-detail/en/varitronix/VI-201-DP-RC-S/153-1003-ND/2375
