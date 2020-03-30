@@ -115,7 +115,7 @@ huge dirs:
 - tactile switch
     - https://www.digikey.com/product-detail/en/omron-electronics-inc-emc-div/B3FS-1000P/SW423CT-ND/277814
     
-- old
+- old stuff, dont order
     - https://www.digikey.com/product-detail/en/varitronix/VI-201-DP-RC-S/153-1003-ND/2375
     - https://www.digikey.com/product-detail/en/matrix-orbital/MOP-AL162A-BBTW-25J-3IN/635-1206-ND/9602839
     - https://www.digikey.com/product-detail/en/adafruit-industries-llc/1001/1528-1513-ND/5774239
