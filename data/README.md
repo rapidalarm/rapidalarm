@@ -9,5 +9,5 @@ This is sample data from tests with the ventilator setup at CTS.  Data was sampl
 
 To convert the measurements to cm H20, use the expression
 
-    10.197 * (x / 1024 - 0.03) / 0.09
+    10.197 * (x / 1024 - 0.04) / 0.09
     
