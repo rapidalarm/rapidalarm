@@ -15,7 +15,7 @@
 /* #define ALARM_MAX 493 */
 uint32_t ALARM_MAX = 583;
 uint32_t ALARM_MIN = 131;
-#define ALARM_RATIO 1.1
+#define ALARM_RATIO 1.5
 #define ALARM_DIFF 68
 
 // ADC values
@@ -36,6 +36,9 @@ void setup() {
     digitalWrite(2, LOW);
 }
 
+// value which caused alarm, for debugging
+uint32_t bad_value = 555;
+
 void loop() {
 
     // number of samples since last min/max
@@ -49,8 +52,6 @@ void loop() {
     // whether data is available from ADC
     int last_sample = millis();
 
-    // value which caused alarm, for debugging
-    uint32_t bad_value = 555;
 
     // current pressure readings
     uint32_t p1;
@@ -98,21 +99,32 @@ void loop() {
 
             // ----- Alarm conditions -----
             if (!alarm_disabled) {
-                if (last_max > ALARM_SAMPLES)
+                if (last_max > ALARM_SAMPLES){
                     alarm_raised = 1;
-                if (last_min > ALARM_SAMPLES)
+                    digitalWrite(2, HIGH);
+                }
+                if (last_min > ALARM_SAMPLES){
                     alarm_raised = 2;
-                if (p_max < (p_min * ALARM_RATIO))
+                    digitalWrite(2, HIGH);
+                }
+                if (p_max < (p_min * ALARM_RATIO)){
                     alarm_raised = 3;
-                if ((p_max - p_min) < 256 * ALARM_DIFF)
+                    digitalWrite(2, HIGH);
+                }
+                if ((p_max - p_min) < 256 * ALARM_DIFF){
+                    digitalWrite(2, HIGH);
                     alarm_raised = 4;
-                if (p_max > 256 * ALARM_MAX)
+                }
+                if (p_max > 256 * ALARM_MAX){
                     bad_value = p_max;
                     alarm_raised = 5;
-                if (p_min < 256 * ALARM_MIN)
+                    digitalWrite(2, HIGH);
+                }
+                if (p_min < 256 * ALARM_MIN){
                     bad_value = p_min;
                     alarm_raised = 6;
-                digitalWrite(2, HIGH);
+                    digitalWrite(2, HIGH);
+                }
             }
             if (t > 5 * SAMPLE_RATE)
                 alarm_disabled = false;
