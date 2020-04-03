@@ -14,7 +14,7 @@
 #define ALARM_TIME 10
 /* #define ALARM_MAX 493 */
 uint32_t ALARM_MAX = 583;
-#define ALARM_MIN 131
+uint32_t ALARM_MIN = 131;
 #define ALARM_RATIO 1.1
 #define ALARM_DIFF 68
 
@@ -48,6 +48,9 @@ void loop() {
 
     // whether data is available from ADC
     int last_sample = millis();
+
+    // value which caused alarm, for debugging
+    uint32_t bad_value = 555;
 
     // current pressure readings
     uint32_t p1;
@@ -104,8 +107,10 @@ void loop() {
                 if ((p_max - p_min) < 256 * ALARM_DIFF)
                     alarm_raised = 4;
                 if (p_max > 256 * ALARM_MAX)
+                    bad_value = p_max;
                     alarm_raised = 5;
                 if (p_min < 256 * ALARM_MIN)
+                    bad_value = p_min;
                     alarm_raised = 6;
                 digitalWrite(2, HIGH);
             }
@@ -114,9 +119,9 @@ void loop() {
 
             t++;
 
-            Serial.print(p_max);
+            Serial.print(p_min);
             Serial.print("\t");
-            Serial.print(256 * ALARM_MAX);
+            Serial.print(bad_value);
             Serial.print("\t");
             Serial.println(alarm_raised);
             /* printf("%d %d %d %d\n", p1 / 256, p_max / 256, p_min / 256, 100 * alarm_raised); */
