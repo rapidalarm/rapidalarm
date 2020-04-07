@@ -1,6 +1,7 @@
 ### Transducers
 
 | Part       | Digikey | Mouser |
+| ---------- | ------- | ------ |
 | MPXV5100GC | 756     | 1029   |
 | MPXV5100GP | 292     |        |
 | MPXV5100DP | 4500    | 2881   |
