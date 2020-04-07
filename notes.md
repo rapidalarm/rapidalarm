@@ -15,8 +15,8 @@
 | MPXV5004   | 1320             |                 |
 
 ### Things to Order
-- switches
-  - https://www.digikey.com/products/en/switches/tactile-switches/197?FV=69%7C411897%2C130%7C406584%2C130%7C406589%2C130%7C406606%2C130%7C406618%2C528%7C380363%2C-8%7C197&quantity=0&ColumnSort=1000011&page=2&stock=1&k=tactile&pageSize=25&pkeyword=tactile
+- https://www.digikey.com/short/zpq87p
+
 - voltage reference 1.234V, 5x - https://www.digikey.com/product-detail/en/texas-instruments/LM385BLP-1-2/296-9558-5-ND/379850
 - voltage reference 3V, 5x - https://www.digikey.com/product-detail/en/texas-instruments/LM4040D30ILPR/296-21583-1-ND/1494038
 - resistor array, 10x - https://www.digikey.com/product-detail/en/bourns-inc/4608X-102-471LF/4608X-2-471LF-ND/1089144
