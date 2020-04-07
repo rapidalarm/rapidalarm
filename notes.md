@@ -1,18 +1,18 @@
 ### Transducers
 
-| Part       | Digikey | Mouser |
-| ---------- | ------- | ------ |
-| MPXV5100GC | 756     | 1029   |
-| MPXV5100GP | 292     |        |
-| MPXV5100DP | 4500    | 2881   |
-| MPXV5050GC |         | 2820   |
-| MPXV5050DP | 379     | 404    |
-| MPXV7025   | 279     | 8264   |
-| MPXV5010GC | 420     |        |
-| MPVZ5010GW | 425     |        |
-| MPXV4006DP | 276     |        |
-| MPXV4006GC | 245     | 200    |
-| MPXV5004   | 1320    |        |
+| Part       | Digikey Quantity | Mouser Quantity |
+| ---------- | -------          | ------          |
+| MPXV5100GC | 756              | 1029            |
+| MPXV5100GP | 292              |                 |
+| MPXV5100DP | 4500             | 2881            |
+| MPXV5050GC |                  | 2820            |
+| MPXV5050DP | 379              | 404             |
+| MPXV7025   | 279              | 8264            |
+| MPXV5010GC | 420              |                 |
+| MPVZ5010GW | 425              |                 |
+| MPXV4006DP | 276              |                 |
+| MPXV4006GC | 245              | 200             |
+| MPXV5004   | 1320             |                 |
 
 ### Things to Order
 - switches
