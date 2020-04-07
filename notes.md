@@ -1,3 +1,47 @@
+### Transducers
+
+| Part       | Digikey | Mouser |
+| MPXV5100GC | 756     | 1029   |
+| MPXV5100GP | 292     |        |
+| MPXV5100DP | 4500    | 2881   |
+| MPXV5050GC |         | 2820   |
+| MPXV5050DP | 379     | 404    |
+| MPXV7025   | 279     | 8264   |
+| MPXV5010GC | 420     |        |
+| MPVZ5010GW | 425     |        |
+| MPXV4006DP | 276     |        |
+| MPXV4006GC | 245     | 200    |
+| MPXV5004   | 1320    |        |
+
+### Things to Order
+- switches
+  - https://www.digikey.com/products/en/switches/tactile-switches/197?FV=69%7C411897%2C130%7C406584%2C130%7C406589%2C130%7C406606%2C130%7C406618%2C528%7C380363%2C-8%7C197&quantity=0&ColumnSort=1000011&page=2&stock=1&k=tactile&pageSize=25&pkeyword=tactile
+- voltage reference 1.234V, 5x - https://www.digikey.com/product-detail/en/texas-instruments/LM385BLP-1-2/296-9558-5-ND/379850
+- voltage reference 3V, 5x - https://www.digikey.com/product-detail/en/texas-instruments/LM4040D30ILPR/296-21583-1-ND/1494038
+- resistor array, 10x - https://www.digikey.com/product-detail/en/bourns-inc/4608X-102-471LF/4608X-2-471LF-ND/1089144
+- resistor array, 10x - https://www.digikey.com/product-detail/en/bourns-inc/4606X-102-681LF/4606X-2-681LF-ND/1089048
+- 4 digit display, 2x - https://www.digikey.com/product-detail/en/lite-on-inc/LTC-4627JF/160-1548-5-ND/408221
+- inductor, 10x - https://www.digikey.com/product-detail/en/bourns-inc/78F100J-TR-RC/78F100J-TR-RCCT-ND/6679613
+- barrel supply, 2x - https://www.digikey.com/product-detail/en/phihong-usa/PSM03A-050-R/993-1236-ND/4031882
+- barrel jack, 3x - https://www.digikey.com/product-detail/en/w%C3%BCrth-elektronik/694106301002/732-5930-ND/5047522
+- micro usb, 3x - https://www.digikey.com/product-detail/en/w%C3%BCrth-elektronik/629105150521/732-5960-1-ND/5047555
+- buttons, 20x - https://www.digikey.com/product-detail/en/c-k/PTS636-SK43-LFS/CKN12303-ND/10071716
+- pressure transducer, 1x - https://www.digikey.com/product-detail/en/nxp-usa-inc/MPXV5050GC6T1/568-13603-2-ND/2186550
+- pressure transducer, 1x - https://www.digikey.com/products/en?keywords=mpxv5100dp
+- pressure transucer, 1x - https://www.digikey.com/product-detail/en/nxp-usa-inc/MPXV7002DP/MPXV7002DP-ND/1168436
+  
+### Design questions
+
+- shield vs dedicated board - shield about same cost with added benefit of extensibility -> slightly larger, more complex
+  - produce dedicated in quantity, design shield produce small amount
+- smd vs thru hole
+  - a
+- reprogrammability - maybe, pogo pin port on back of board
+  - dont care
+- sourcing transducers
+- serial printing/debugging - no, requires switch from atmega or serial-usb interface chip
+- power connector - micro usb?  convenient for low quant, more difficult to solder than barrel
+
 - alarm - SFM-27 https://www.youtube.com/watch?v=LLGMlErc0yQ
 - esp8266 bulk US - https://www.ebay.com/itm/5X-ESP8266-ESP-12E-802-11n-WIFI-USB-Development-Board-Arduino-MicroPython-5-Pack/132532596048?hash=item1edb8eed50:g:Z3QAAOSwsnVdyOf-
 
@@ -98,7 +142,7 @@ huge dirs:
     - ARDS
     - pneumonia
 
-### Things to Order
+### Old Purchases
 - displays
     - 2x - https://www.digikey.com/product-detail/en/lite-on-inc/LTC-4627JF/160-1548-5-ND/408221
 - transducers
