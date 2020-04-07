@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "common")(type "Legacy")(uri "${KIPRJMOD}/../common.lib")(options "")(descr ""))
+  (lib (name "pcb_dip-rescue")(type "Legacy")(uri "${KIPRJMOD}/pcb_dip-rescue.lib")(options "")(descr "")(disabled))
+)
