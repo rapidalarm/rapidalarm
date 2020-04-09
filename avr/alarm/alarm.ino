@@ -54,8 +54,8 @@ const byte charSegmentMap[] = {
   0b00000001, // r
 };
 
-const byte digitPins[] = {3,4,5,6};
-const byte segmentPins[] = {7,8,9,10,11,12,13,14};
+const byte digitPins[] = {A4, A2, 11, 10};
+const byte segmentPins[] = {6, 12, 7, A1, A3, 8, 9, 5};
 /* displayedValue should not begin with a .
  * It should have at most five characters
  */
@@ -105,16 +105,18 @@ void UpdateDisplay() {
 
 void setup() {
     Serial.begin(115200);
-    pinMode("A6", INPUT);
-    pinMode("A7", INPUT);
-    pinMode(2, OUTPUT);
-    digitalWrite(2, LOW);
+    pinMode(A6, INPUT);
+    pinMode(A7, INPUT);
+    pinMode(3, OUTPUT);
+    analogWrite(3, 0);
+    TCCR2B = TCCR2B & B11111000 | B00000010;
     for(byte i = 0; i < sizeof(digitPins); i++) {
         pinMode(digitPins[i], OUTPUT);
     }
     for(byte i = 0; i < sizeof(segmentPins); i++) {
         pinMode(segmentPins[i], OUTPUT);
     }
+
 }
 
 
@@ -201,7 +203,7 @@ void loop() {
                 if (p_min < 256 * ALARM_MIN){
                     alarm_raised = 6;
                 }
-                if(alarm_raised) digitalWrite(2, HIGH);
+                if(alarm_raised) analogWrite(3, 50);
             }
             if (t > 5 * SAMPLE_RATE) {
                 alarm_disabled = false;
