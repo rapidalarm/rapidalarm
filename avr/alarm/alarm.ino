@@ -1,3 +1,7 @@
+// Ventmon - Ventilator Monitor
+// Evan Widloski, Brian Ricconi
+// 2020-04-09
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
@@ -30,7 +34,22 @@ const uint32_t RELEASE_COEFF = 1000;
 const uint16_t ALARM_SAMPLES = SAMPLE_RATE * ALARM_TIME;
 const uint16_t display_counter_max = 8 * SAMPLE_RATE;
 
+const uint16_t set_blink_counter_max = SAMPLE_RATE / 2;
 
+// gui mode
+uint32_t mode = 0;
+
+// state for pending button action. reset when handled
+bool mode_pressed = false;
+bool up_pressed = false;
+bool down_pressed = false;
+
+// ----- pins -----
+const uint8_t PIN_MODE = 2;
+const uint8_t PIN_UP = 0;
+const uint8_t PIN_DOWN = 4;
+const uint8_t PIN_BUZZ = 3;
+const uint8_t PIN_PRES = A6;
 
 /* Global variables for seven segment display */
 const byte charSegmentMap[] = {
@@ -102,14 +121,57 @@ void UpdateDisplay() {
   if(dp) currentStringIndex++;
 }
 
+// handle pin change interrupt for D0 to D7 here
+ISR (PCINT2_vect)
+{
+    // if PD0 low
+    if ((PIND & (1 << PD2)) == 0) {
+        mode_pressed = true;
+    }
+    // if PD2 low
+    if ((PIND & (1 << PD0)) == 0) {
+        up_pressed = true;
+    }
+    // if PD4 low
+    if ((PIND & (1 << PD4)) == 0) {
+        down_pressed = true;
+    }
+    // poor man's debouncing
+    delay(500);
+}
+
+void pciSetup(byte pin)
+{
+    *digitalPinToPCMSK(pin) |= bit (digitalPinToPCMSKbit(pin));  // enable pin
+    PCIFR  |= bit (digitalPinToPCICRbit(pin)); // clear any outstanding interrupt
+    PCICR  |= bit (digitalPinToPCICRbit(pin)); // enable interrupt for the group
+}
+
 
 void setup() {
     Serial.begin(115200);
+    Serial.println("start");
+    // pressure input
     pinMode(A6, INPUT);
     pinMode(A7, INPUT);
-    pinMode(3, OUTPUT);
-    analogWrite(3, 0);
-    TCCR2B = TCCR2B & B11111000 | B00000010;
+    // button 1
+    pinMode(PIN_MODE, INPUT);
+    digitalWrite(PIN_MODE, HIGH);
+    pciSetup(PIN_MODE);
+    // button 2
+    pinMode(PIN_UP, INPUT);
+    digitalWrite(PIN_UP, HIGH);
+    pciSetup(PIN_UP);
+    // button 3
+    pinMode(PIN_DOWN, INPUT);
+    digitalWrite(PIN_DOWN, HIGH);
+    pciSetup(PIN_DOWN);
+    // buzzer
+    pinMode(PIN_BUZZ, OUTPUT);
+    analogWrite(PIN_BUZZ, 0);
+
+    TCCR2B = TCCR2B & 0b11111000 | 0b00000010;
+
     for(byte i = 0; i < sizeof(digitPins); i++) {
         pinMode(digitPins[i], OUTPUT);
     }
@@ -146,94 +208,132 @@ void loop() {
     static uint32_t p_min = UINT32_MAX;
 
     while (true) {
+        if (mode_pressed) {
+            Serial.println("MODE pressed");
+            mode += 1;
+            mode %= 3;
+            mode_pressed = false;
+        }
         if (millis() - last_sample >= SAMPLE_TIME) {
             last_sample = millis();
-            p1 = 256 * (uint32_t) analogRead(6);
-            p2 = 256 * (uint32_t) analogRead(7);
-            if (p1 > p_max) {
-                p_max = (uint32_t)(
-                    (
-                        (uint32_t)p_max * ATTACK_COEFF +
-                        (uint32_t)p1 * (COEFF_MAX - ATTACK_COEFF)
-                    ) / COEFF_MAX
-                );
-                last_max = 0;
-                if (reached_min) {
-                    period = last_first_max;
-                    last_first_max = 0;
-                    reached_min = false;
+            if (mode == 0) {
+                p1 = 256 * (uint32_t) analogRead(6);
+                p2 = 256 * (uint32_t) analogRead(7);
+                if (p1 > p_max) {
+                    p_max = (uint32_t)(
+                        (
+                            (uint32_t)p_max * ATTACK_COEFF +
+                            (uint32_t)p1 * (COEFF_MAX - ATTACK_COEFF)
+                        ) / COEFF_MAX
+                    );
+                    last_max = 0;
+                    if (reached_min) {
+                        period = last_first_max;
+                        last_first_max = 0;
+                        reached_min = false;
+                    }
                 }
-            }
-            else {
-                p_max = (uint32_t)(
-                    (
-                        (uint32_t)p_max * RELEASE_COEFF +
-                        (uint32_t)p1 * (COEFF_MAX - RELEASE_COEFF)
-                    ) / COEFF_MAX
-                );
-                last_max++;
-            }
-            if (p1 < p_min) {
-                p_min = (ATTACK_COEFF * p_min + (COEFF_MAX - ATTACK_COEFF) * p1) / COEFF_MAX;
-                last_min = 0;
-                reached_min = true;
-            }
-            else {
-                p_min = (RELEASE_COEFF * p_min + (COEFF_MAX - RELEASE_COEFF) * p1) / COEFF_MAX;
-                last_min++;
-            }
+                else {
+                    p_max = (uint32_t)(
+                        (
+                            (uint32_t)p_max * RELEASE_COEFF +
+                            (uint32_t)p1 * (COEFF_MAX - RELEASE_COEFF)
+                        ) / COEFF_MAX
+                    );
+                    last_max++;
+                }
+                if (p1 < p_min) {
+                    p_min = (ATTACK_COEFF * p_min + (COEFF_MAX - ATTACK_COEFF) * p1) / COEFF_MAX;
+                    last_min = 0;
+                    reached_min = true;
+                }
+                else {
+                    p_min = (RELEASE_COEFF * p_min + (COEFF_MAX - RELEASE_COEFF) * p1) / COEFF_MAX;
+                    last_min++;
+                }
 
-            // ----- Alarm conditions -----
-            if (!alarm_disabled) {
-                if (last_max > ALARM_SAMPLES){
-                    alarm_raised = 1;
+                // ----- Alarm conditions -----
+                if (!alarm_disabled) {
+                    if (last_max > ALARM_SAMPLES){
+                        alarm_raised = 1;
+                    }
+                    if (last_min > ALARM_SAMPLES){
+                        alarm_raised = 2;
+                    }
+                    if (p_max < (p_min * ALARM_RATIO)){
+                        alarm_raised = 3;
+                    }
+                    if ((p_max - p_min) < 256 * ALARM_DIFF){
+                        alarm_raised = 4;
+                    }
+                    if (p_max > 256 * ALARM_MAX){
+                        alarm_raised = 5;
+                    }
+                    if (p_min < 256 * ALARM_MIN){
+                        alarm_raised = 6;
+                    }
+                    if(alarm_raised) analogWrite(PIN_BUZZ, 0);
                 }
-                if (last_min > ALARM_SAMPLES){
-                    alarm_raised = 2;
+                if (t > 5 * SAMPLE_RATE) {
+                    alarm_disabled = false;
+                } else {
+                t++;
                 }
-                if (p_max < (p_min * ALARM_RATIO)){
-                    alarm_raised = 3;
-                }
-                if ((p_max - p_min) < 256 * ALARM_DIFF){
-                    alarm_raised = 4;
-                }
-                if (p_max > 256 * ALARM_MAX){
-                    alarm_raised = 5;
-                }
-                if (p_min < 256 * ALARM_MIN){
-                    alarm_raised = 6;
-                }
-                if(alarm_raised) analogWrite(3, 50);
-            }
-            if (t > 5 * SAMPLE_RATE) {
-                alarm_disabled = false;
-            } else {
-            t++;
-            }
-            UpdateDisplay();
-            Serial.print(period);
-            Serial.print("\t");
-            Serial.println(alarm_raised);
-            /* printf("%d %d %d %d\n", p1 / 256, p_max / 256, p_min / 256, 100 * alarm_raised); */
-            /* sprintf(displayedValue, "PE%2d", p_max / 2568); */
+                UpdateDisplay();
+                /* printf("%d %d %d %d\n", p1 / 256, p_max / 256, p_min / 256, 100 * alarm_raised); */
+                /* sprintf(displayedValue, "PE%2d", p_max / 2568); */
 
-            if (display_counter < display_counter_max / 3) {
-                // PIP
-                sprintf(displayedValue, "PI%2d", p_max / 2568);
-            } else if (display_counter < 2 * display_counter_max / 3) {
-                // PEEP
-                sprintf(displayedValue, "PE%2d", p_min / 2568);
-            } else {
-                // rate
-                sprintf(displayedValue, "r %2d", (60 * SAMPLE_RATE) / period);
+                if (display_counter < display_counter_max / 3) {
+                    // PIP
+                    // FIXME - conversion
+                    sprintf(displayedValue, "PI%2d", p_max / 2568);
+                } else if (display_counter < 2 * display_counter_max / 3) {
+                    // PEEP
+                    // FIXME - conversion
+                    sprintf(displayedValue, "PE%2d", p_min / 2568);
+                } else {
+                    // rate
+                    sprintf(displayedValue, "rr%2d", (60 * SAMPLE_RATE) / period);
+                }
+                // breaths per minute
+
+                last_first_max++;
             }
-            // breaths per minute
+            // edit PIP
+            else if (mode == 1) {
+                if (up_pressed) {
+                    ALARM_MAX += 2 * 2568;
+                    up_pressed = false;
+                }
+                else if (down_pressed) {
+                    ALARM_MAX -= 2 * 2568;
+                    down_pressed = false;
+                }
+                if (display_counter % (SAMPLE_RATE / 2) > SAMPLE_RATE / 4) {
+                    sprintf(displayedValue, "PI%2d", 256 * ALARM_MAX / 2568);
+                } else {
+                    sprintf(displayedValue, "PI  ");
+                }
+            }
+            // edit PEEP
+            else if (mode == 2) {
+                if (up_pressed) {
+                    ALARM_MAX += 2 * 2568;
+                    up_pressed = false;
+                }
+                else if (down_pressed) {
+                    ALARM_MAX -= 2 * 2568;
+                    down_pressed = false;
+                }
+                if (display_counter % (SAMPLE_RATE / 2) > SAMPLE_RATE / 8) {
+                    sprintf(displayedValue, "PE%2d", 256 * ALARM_MAX / 2568);
+                } else {
+                    sprintf(displayedValue, "PE  ");
+                }
+            }
             display_counter++;
             display_counter %= display_counter_max;
-
-            last_first_max++;
         }
-
         UpdateDisplay();
     }
 }
