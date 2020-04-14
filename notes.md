@@ -14,7 +14,36 @@
 | MPXV4006GC | 245              | 200             |
 | MPXV5004   | 1320             |                 |
 
+- sdp800-125
+- https://octopart.com/2smpp-02-omron-18985974?r=sp#Specs
+- https://octopart.com/tbpdans015pgucv-honeywell-34872416?r=sp
+- https://octopart.com/mpvz4006gw7u-nxp+semiconductors-70303583?r=sp
+- differential sensors ~.01psi/1cmh20 - https://www.digikey.com/products/en/sensors-transducers/pressure-sensors-transducers/512?k=pressure+sensor&k=&pkeyword=pressure+sensor&sv=0&pv144=8614&pv144=6360&pv144=4027&pv144=2964&pv144=620&pv144=640&pv144=427967&pv144=650&pv144=662&pv144=666&pv144=683&pv144=427968&pv144=694&pv144=425047&pv144=719&pv144=725&pv144=728&pv144=729&pv144=427966&pv144=427965&pv144=786&pv144=6350&pv144=6876&pv144=427804&pv144=8073&pv144=8612&pv144=8613&pv144=8289&pv144=9508&pv276=174378&pv276=228720&pv276=206234&pv276=208636&pv276=208699&pv276=209065&pv276=209787&pv276=209799&pv276=209898&pv276=209941&pv276=209952&pv276=210520&pv276=211233&pv276=249171&pv276=249294&pv276=249306&pv276=249369&pv276=249379&sf=1&FV=-8%7C512&quantity=&ColumnSort=0&page=1&stock=1&pageSize=500
+- [venturi tube calculator](https://www.pipeflowcalculations.com/venturi/calculator.xhtml)
+
+### M. Stevens Questions
+
+- considerations for pick-and-place
+- local pick-and-place machines
+
+- tvs diodes on buttons
+- high esr bulk cap on supply
+- wall wart has built-in mov
+- panelizing design
+- 062
+- vscore 1 mil
+
+
+#### Flow transducers
+- https://octopart.com/d6f-ph0505ad3-omron-29408017?r=sp
+
 ### Things to Order
+- https://www.digikey.com/product-detail/en/te-connectivity-alcoswitch-switches/2-1825910-7/450-1642-ND/1632528
+- https://octopart.com/2smpp-02-omron-18985974?r=sp#Specs
+- https://octopart.com/tbpdans015pgucv-honeywell-34872416?r=sp
+- https://octopart.com/mpvz4006gw7u-nxp+semiconductors-70303583?r=sp
+
+### Ordered
 - https://www.digikey.com/short/zpq87p
 
 - voltage reference 1.234V, 5x - https://www.digikey.com/product-detail/en/texas-instruments/LM385BLP-1-2/296-9558-5-ND/379850
