@@ -1,5 +1,10 @@
 **/*mp4
 **/*kdenlive
+
+# kicad
+**/gerbers/
+**/*-bak
+
 gui/keystore
 gui/bin
 gui/.buildozer
