@@ -4,7 +4,19 @@
 # kicad
 **/gerbers/
 **/*-bak
+# Temporary files
+**/*.000
+**/*.bak
+**/*.bck
+**/*.kicad_pcb-bak
+**/*.sch-bak
+**/*_autosave-*
+**/*.tmp
+**/*-save.pro
+**/*-save.kicad_pcb
+**/*fp-info-cache
 
 gui/keystore
 gui/bin
 gui/.buildozer
+old
