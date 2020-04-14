@@ -6,5 +6,7 @@
 
 - `code/` - firmware for monitor ATMega, simulations
   - `data/` - labeled alarm test data from artificial lung
+  - `alarm/` - ATmega328 alarm firmware
+  - `algorithm/` - alarm algorithm implementation and test code
 - `cad/` - mechanical CAD files, enclosures, etc.
 - `pcb/` - KiCAD design files
