@@ -1,6 +1,6 @@
 % Recursive envelope-tracking algorithm for Illinois RapidAlarm non-cycling
 % alarm. The alarm is triggered after the ventilator stops cycling for a
-% specified length of time or exceeds specified ranges of pressure or respiratory rate. 
+% specified length of time or exceeds specified ranges of pressure or respiratory rate.
 % It also tracks a moving average of maximum and
 % minimum pressure and respiratory rate values for display.
 %
@@ -66,10 +66,10 @@ function state = recursive_envelope_loop(sensor_in,params)
     attack_samples = params.ATTACK_TIME/sample_time;
     alarm_attack_coefficient = exp(-1/attack_samples);
     alarm_release_coefficient = ((params.ALARM_RATIO - 1)/(params.NOMINAL_RATIO - 1))^(1/release_samples);
-    
+
     % Store algorithm state to visualize behavior
     state = timetable('RowTimes',sensor_in.Timestamp,'Size',[size(sensor_in,1),7],'VariableTypes',{'double','logical','double','double','double','double','double'},'VariableNames',{'Pressure','AlarmState','MaxPressure','MinPressure','RR','p_max','p_min'});
-    
+
     % Initialize tracking variables
     p_max = params.DEFAULT_PIP;
     p_min = params.DEFAULT_PIP / params.NOMINAL_RATIO;
@@ -81,29 +81,29 @@ function state = recursive_envelope_loop(sensor_in,params)
     time_since_last_breath = 0;
     avg_breath_time = floor(60/params.INITIAL_RR/sample_time);
     prev_breath_time = avg_breath_time;
-    
+
     % Outputs
     alarm_state = false;
     display_max = p_max;
     display_min = p_min;
     display_rr = params.INITIAL_RR;
-    
+
     % Main loop
     for t = 1:size(sensor_in,1)
         % Read pressure from sensor
         p = sensor_in.Pressure(t);
         time_since_last_breath = time_since_last_breath + 1;
-                
+
         % Nonlinear peak tracking
         if p > p_max
             p_max = alarm_attack_coefficient*p_max + (1-alarm_attack_coefficient)*p;
             time_since_last_max = 0;
             last_max = p;
-            
+
             % Entering increasing state
             if breath_state == 0
                 breath_state = 1;
-                
+
                 % Update display min based on last min value
                 display_min = params.DISPLAY_SMOOTHING*display_min + (1-params.DISPLAY_SMOOTHING)*last_min;
             end
@@ -115,22 +115,22 @@ function state = recursive_envelope_loop(sensor_in,params)
             p_min = alarm_attack_coefficient*p_min+ (1-alarm_attack_coefficient)*p;
             time_since_last_min = 0;
             last_min = p;
-            
+
             % Entering decreasing state
             if breath_state == 1 && time_since_last_breath > 1
                 breath_state = 0;
-                
+
                 % Update display max based on last max value
-                display_max = params.DISPLAY_SMOOTHING*display_max + (1-params.DISPLAY_SMOOTHING)*last_max;  
-                
+                display_max = params.DISPLAY_SMOOTHING*display_max + (1-params.DISPLAY_SMOOTHING)*last_max;
+
                 % End of breath - track respiratory rate
                 new_breath_time = time_since_last_breath-time_since_last_max;
                 time_since_last_breath = time_since_last_max;
-                
+
                 % If breath is longer than max, set to max so that tracking
                 % recovers when breathing restarts
                 new_breath_time = min(new_breath_time,alarm_samples);
-                                
+
                 % Breath time is smoothed using a filter with both feedback
                 % and feedforward components because peaks can come at
                 % different points in the breath cycle. Filter equation:
@@ -143,7 +143,7 @@ function state = recursive_envelope_loop(sensor_in,params)
             p_min = alarm_release_coefficient*p_min + (1-alarm_release_coefficient)*p;
             time_since_last_min = time_since_last_min + 1;
         end
-                                
+
         % Check for alarm state
         alarm_state =  (p_max - p_min < params.ALARM_DIFF) | ... % Max and min too close
                        (p_max / p_min < params.ALARM_RATIO) | ... % Max and min too close
@@ -153,30 +153,30 @@ function state = recursive_envelope_loop(sensor_in,params)
                        (p_min < params.MIN_ALARM) | ...   % Min pressure exceeded
                        (display_rr > params.ALARM_RR_MAX) | ...            % Respiratory rate too fast
                        (display_rr < params.ALARM_RR_MIN);            % Respiratory rate too slow
-        
+
         % Store state to analyze performance of algorithm
         state(t,:) = {p,alarm_state,display_max,display_min,display_rr,p_max,p_min};
     end
 end
 
 function plot_alarm_state(state,description)
-    
+
     % Shade time intervals where alarm is active
     area(state.Time,state.AlarmState*50,'FaceColor',[0.5 0 0],'FaceAlpha',0.2,'LineStyle','none');
-    
+
     % Plot pressure and max/min envelopes
-    hold on; 
+    hold on;
     set(gca,'ColorOrderIndex',1);
     plot(state.Time,[state.Pressure,state.MaxPressure,state.MinPressure,state.RR,state.p_max,state.p_min]);
-    hold off; 
-        
+    hold off;
+
     % Scale and label plot
-    ylim([0 30]); 
+    ylim([0 30]);
     xlabel('Time'); ylabel('Pressure (cm H2O)');
     title(description);
     legend('Alarm','Pressure','Max Pressure','Min Pressure','RR','Max envelope','Min envelope');
-    
+
     % Lock pan/scroll to x dimension only
     ax = gca; ax.Interactions = [panInteraction('Dimensions','x') zoomInteraction('Dimensions','x') dataTipInteraction];
-    
+
 end
