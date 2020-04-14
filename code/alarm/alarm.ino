@@ -125,11 +125,11 @@ void UpdateDisplay() {
 ISR (PCINT2_vect)
 {
     // if PD0 low
-    if ((PIND & (1 << PD2)) == 0) {
+    if ((PIND & (1 << PD0)) == 0) {
         mode_pressed = true;
     }
     // if PD2 low
-    if ((PIND & (1 << PD0)) == 0) {
+    if ((PIND & (1 << PD2)) == 0) {
         up_pressed = true;
     }
     // if PD4 low
