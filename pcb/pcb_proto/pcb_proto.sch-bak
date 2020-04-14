@@ -29,17 +29,17 @@ Connection ~ 7650 2350
 Connection ~ 7650 3250
 Connection ~ 8650 2900
 Wire Wire Line
-	2300 2650 2600 2650
+	2300 2600 2600 2600
 Wire Wire Line
-	2300 2750 2600 2750
+	2300 2800 2600 2800
 Wire Wire Line
 	2400 3750 2400 3850
 Wire Wire Line
 	2400 4750 2400 4850
 Wire Wire Line
-	2600 2250 2600 2650
+	2600 2250 2600 2600
 Wire Wire Line
-	2600 2750 2600 3150
+	2600 2800 2600 3150
 Wire Wire Line
 	2900 4150 3150 4150
 Wire Wire Line
@@ -99,11 +99,11 @@ Wire Wire Line
 Wire Wire Line
 	4350 3900 4900 3900
 Wire Wire Line
-	4350 4100 5850 4100
-Wire Wire Line
 	4350 4200 5000 4200
 Wire Wire Line
-	4350 4400 4850 4400
+	4350 4300 4850 4300
+Wire Wire Line
+	4350 4400 5850 4400
 Wire Wire Line
 	4350 4500 4800 4500
 Wire Wire Line
@@ -121,7 +121,7 @@ Wire Wire Line
 Wire Wire Line
 	4800 5150 4800 4500
 Wire Wire Line
-	4850 4400 4850 4900
+	4850 4300 4850 4900
 Wire Wire Line
 	4850 4900 5050 4900
 Wire Wire Line
@@ -129,9 +129,9 @@ Wire Wire Line
 Wire Wire Line
 	4900 3850 4900 3900
 Wire Wire Line
-	4900 4300 4350 4300
+	4900 4100 4350 4100
 Wire Wire Line
-	4900 4650 4900 4300
+	4900 4650 4900 4100
 Wire Wire Line
 	5000 4300 5000 4350
 Wire Wire Line
@@ -153,9 +153,9 @@ Wire Wire Line
 Wire Wire Line
 	5700 5150 5700 5250
 Wire Wire Line
-	5800 4300 5800 4550
+	5800 4600 5800 4850
 Wire Wire Line
-	5850 4300 5800 4300
+	5850 4600 5800 4600
 Wire Wire Line
 	6400 3800 6650 3800
 Wire Wire Line
@@ -266,6 +266,8 @@ Text Label 4600 2600 2    50   ~ 0
 DIG4
 Text Label 4600 2700 2    50   ~ 0
 DIG3
+Text Label 4600 2800 2    50   ~ 0
+b
 Text Label 4600 3300 2    50   ~ 0
 DIG:
 Text Label 4600 3400 2    50   ~ 0
@@ -466,12 +468,12 @@ $EndComp
 $Comp
 L power:GND #PWR0114
 U 1 1 5EB3C207
-P 5800 4550
-F 0 "#PWR0114" H 5800 4300 50  0001 C CNN
-F 1 "GND" H 5805 4377 50  0000 C CNN
-F 2 "" H 5800 4550 50  0001 C CNN
-F 3 "" H 5800 4550 50  0001 C CNN
-	1    5800 4550
+P 5800 4850
+F 0 "#PWR0114" H 5800 4600 50  0001 C CNN
+F 1 "GND" H 5805 4677 50  0000 C CNN
+F 2 "" H 5800 4850 50  0001 C CNN
+F 3 "" H 5800 4850 50  0001 C CNN
+	1    5800 4850
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -506,17 +508,6 @@ F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 4830 3700 
 F 3 "~" H 4900 3700 50  0001 C CNN
 	1    4900 3700
 	1    0    0    -1  
-$EndComp
-$Comp
-L Connector_Generic:Conn_01x02 J?
-U 1 1 5E8CF4CD
-P 2100 2750
-F 0 "J?" H 2019 2427 50  0000 C CNN
-F 1 "Conn_01x02" H 2019 2518 50  0000 C CNN
-F 2 "" H 2100 2750 50  0001 C CNN
-F 3 "~" H 2100 2750 50  0001 C CNN
-	1    2100 2750
-	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x02 J3
@@ -574,47 +565,47 @@ F 3 "~" H 8650 3100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Switch:SW_MEC_5G SW1
-U 1 1 5E88D2EA
+L common:SW_Push SW1
+U 1 1 5E939516
 P 5250 4650
-F 0 "SW1" H 5450 4800 50  0000 C CNN
-F 1 "MODE" H 5450 4700 50  0000 C CNN
-F 2 "common:PTS636 SK43 LFS" H 5250 4850 50  0001 C CNN
-F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 5250 4850 50  0001 C CNN
+F 0 "SW1" H 5250 4934 50  0000 C CNN
+F 1 "SW_Push" H 5250 4843 50  0000 C CNN
+F 2 "common:SW_PUSH_6mm" H 5250 4850 50  0001 C CNN
+F 3 "" H 5250 4850 50  0001 C CNN
 	1    5250 4650
 	1    0    0    -1  
 $EndComp
 $Comp
-L Switch:SW_MEC_5G SW2
-U 1 1 5E88D962
+L common:SW_Push SW2
+U 1 1 5E939A25
 P 5250 4900
-F 0 "SW2" H 5450 5050 50  0000 C CNN
-F 1 "UP" H 5450 4950 50  0000 C CNN
-F 2 "common:PTS636 SK43 LFS" H 5250 5100 50  0001 C CNN
-F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 5250 5100 50  0001 C CNN
+F 0 "SW2" H 5250 5184 50  0000 C CNN
+F 1 "SW_Push" H 5250 5093 50  0000 C CNN
+F 2 "common:SW_PUSH_6mm" H 5250 5100 50  0001 C CNN
+F 3 "" H 5250 5100 50  0001 C CNN
 	1    5250 4900
 	1    0    0    -1  
 $EndComp
 $Comp
-L Switch:SW_MEC_5G SW3
-U 1 1 5E88E16C
+L common:SW_Push SW3
+U 1 1 5E93ADFB
 P 5250 5150
-F 0 "SW3" H 5450 5300 50  0000 C CNN
-F 1 "DOWN" H 5450 5200 50  0000 C CNN
-F 2 "common:PTS636 SK43 LFS" H 5250 5350 50  0001 C CNN
-F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 5250 5350 50  0001 C CNN
+F 0 "SW3" H 5250 5434 50  0000 C CNN
+F 1 "SW_Push" H 5250 5343 50  0000 C CNN
+F 2 "common:SW_PUSH_6mm" H 5250 5350 50  0001 C CNN
+F 3 "" H 5250 5350 50  0001 C CNN
 	1    5250 5150
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:Buzzer BZ1
 U 1 1 5EA93D82
-P 5950 4200
-F 0 "BZ1" H 6103 4228 50  0000 L CNN
-F 1 "Piezo" H 6103 4138 50  0000 L CNN
-F 2 "Buzzer_Beeper:Buzzer_TDK_PS1240P02BT_D12.2mm_H6.5mm" V 5925 4300 50  0001 C CNN
-F 3 "~" V 5925 4300 50  0001 C CNN
-	1    5950 4200
+P 5950 4500
+F 0 "BZ1" H 6103 4528 50  0000 L CNN
+F 1 "Piezo" H 6103 4438 50  0000 L CNN
+F 2 "Buzzer_Beeper:Buzzer_TDK_PS1240P02BT_D12.2mm_H6.5mm" V 5925 4600 50  0001 C CNN
+F 3 "~" V 5925 4600 50  0001 C CNN
+	1    5950 4500
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -627,6 +618,17 @@ F 2 "Crystal:Resonator_muRata_CSTLSxxxX-3Pin_W5.5mm_H3.0mm" H 4725 3100 50  0001
 F 3 "~" H 4725 3100 50  0001 C CNN
 	1    4750 3100
 	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector:Barrel_Jack J1
+U 1 1 5E90E0FB
+P 2000 2700
+F 0 "J1" H 2057 3023 50  0000 C CNN
+F 1 "Barrel_Jack" H 2057 2932 50  0000 C CNN
+F 2 "Connector_BarrelJack:BarrelJack_Wuerth_6941xx301002" H 2050 2660 50  0001 C CNN
+F 3 "~" H 2050 2660 50  0001 C CNN
+	1    2000 2700
+	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R_Pack03_SIP RN1
