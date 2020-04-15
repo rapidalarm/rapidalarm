@@ -38,7 +38,7 @@ const uint16_t debounce_time = 200;
 ISR (PCINT2_vect)
 {
     // mode button press
-    if ((PIND & (1 << PD2)) == 0 && debounce()) {
+    if ((PIND & (1 << PD0)) == 0 && debounce()) {
         mode_pressed = true;
     }
     // down button press
@@ -46,7 +46,7 @@ ISR (PCINT2_vect)
         up_pressed = true;
     }
     // up button press
-    if ((PIND & (1 << PD0)) == 0 && debounce()) {
+    if ((PIND & (1 << PD2)) == 0 && debounce()) {
         down_pressed = true;
     }
 }
