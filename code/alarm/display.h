@@ -30,6 +30,8 @@ const byte digit_map[] = {
   0b00011100, // L
   0b01101110, // H
   0b11000000, // :
+  0b00011010, // c
+  0b00101010, // n
 };
 
 // cycle through display digits
@@ -68,6 +70,10 @@ void update_display() {
     case 'H':     segmentMapIndex = 19;
         break;
     case ':':     segmentMapIndex = 20;
+        break;
+    case 'c':     segmentMapIndex = 21;
+        break;
+    case 'n':     segmentMapIndex = 22;
         break;
     default:      segmentMapIndex = displayedValue[string_index] - '0';
   }

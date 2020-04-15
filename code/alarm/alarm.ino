@@ -173,6 +173,42 @@ void loop() {
                 sprintf(displayedValue, "HP:  ");
             }
         }
+        // edit low-rate alarm condition
+        else if (mode == MODE_SET_THRESH_LR) {
+            // change alarm setting
+            if (up_pressed) {
+                THRESH_LP = limit(THRESH_LR, 0, 97) + 2;
+                up_pressed = false;
+            }
+            else if (down_pressed) {
+                THRESH_LP = limit(THRESH_LR, 2, 99) - 2;
+                down_pressed = false;
+            }
+            // flash alarm setting
+            if (counter % (SAMPLE_RATE / 2) > SAMPLE_RATE / 8) {
+                sprintf(displayedValue, "Lr:%2d", THRESH_LR);
+            } else {
+                sprintf(displayedValue, "Lr:  ");
+            }
+        }
+        // edit high-rate alarm condition
+        else if (mode == MODE_SET_THRESH_HR) {
+            // change alarm setting
+            if (up_pressed) {
+                THRESH_HR = limit(THRESH_HR, 0, 97) + 2;
+                up_pressed = false;
+            }
+            else if (down_pressed) {
+                THRESH_HR = limit(THRESH_HR, 2, 99) - 2;
+                down_pressed = false;
+            }
+            // flash alarm setting
+            if (counter % (SAMPLE_RATE / 2) > SAMPLE_RATE / 8) {
+                sprintf(displayedValue, "Hr:%2d", THRESH_HR);
+            } else {
+                sprintf(displayedValue, "Hr:  ");
+            }
+        }
         // alarm mode
         else if (mode == MODE_ALARM) {
             // beep alarm on-off
@@ -192,7 +228,7 @@ void loop() {
                 );
             }
             else {
-                sprintf(displayedValue, "    ");
+                sprintf(displayedValue, "     ");
             }
         }
 
