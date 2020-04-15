@@ -3,23 +3,26 @@
 // alarm types
 typedef enum {
     // no alarm
-    NONE,
+    ALARM_NONE,
     // ventilator not cycling
-    NON_CYCLING,
+    ALARM_NC,
     // PEEP below threshold
-    LOW_PRESSURE,
+    ALARM_LP,
     // PIP above threshold
-    HIGH_PRESSURE,
+    ALARM_HP,
     // respiratory rate below threshold
-    LOW_RATE,
+    ALARM_LR,
     // respiratory rate above threshold
-    HIGH_RATE
-} ALARM;
+    ALARM_HR
+} alarm_t;
 
 // ----- Algorithm State -----
 
 // whether there is an alarm condition
-ALARM alarm_raised = NONE;
+alarm_t alarm_raised = ALARM_NONE;
+// display code for raised alarm
+char *alarm_code = "  ";
+float alarm_value = 0;
 // number of samples since last PEEP attack sample
 uint16_t last_peep = 0;
 // number of samples since last PIP attack sample
@@ -40,11 +43,14 @@ float p_min = 100;
 const float ATTACK_COEFF = .9;
 const float RELEASE_COEFF = .999;
 
-const uint16_t ALARM_TIME = 10;
-uint16_t ALARM_MAX = 60;
-uint16_t ALARM_MIN = 10;
-const uint16_t ALARM_RATIO = 1.5;
-const uint16_t ALARM_DIFF = 86;
+// alarm condition thresholds
+uint16_t THRESH_NC = 10; // s
+uint16_t THRESH_LP = 2; // cm H20
+uint16_t THRESH_HP = 40; // cm H20
+uint16_t THRESH_LR = 6; // breaths/min
+uint16_t THRESH_HR = 35; // breaths/min
+/* uint16_t ALARM_RATIO = 1.5; */
+/* uint16_t ALARM_DIFF = 86; */
 
 // ----- Functions -----
 
@@ -82,31 +88,53 @@ void run_algorithm(float p) {
     // ----- Alarm conditions -----
 
     if (!alarm_disabled) {
-        if (last_pip > SAMPLE_RATE * ALARM_TIME){
-            alarm_raised = NON_CYCLING;
+        // non-cycling alarm
+        if (
+            last_pip > SAMPLE_RATE * THRESH_NC ||
+            last_peep > SAMPLE_RATE * THRESH_NC
+            ){
+            alarm_raised = ALARM_NC;
+            alarm_code = "nc";
+            alarm_value = (SAMPLE_RATE * THRESH_NC) / 1000;
         }
-        if (last_peep > SAMPLE_RATE * ALARM_TIME){
-            alarm_raised = NON_CYCLING;
+        /* else if (p_max < (p_min * ALARM_RATIO)){ */
+        /*     // FIXME - add ratio alarm condition */
+        /*     alarm_raised = NON_CYCLING; */
+        /*     alarm_code = "nc"; */
+        /*     // FIXME */
+        /*     alarm_value = 11; */
+        /* } */
+        /* else if ((p_max - p_min) < ALARM_DIFF){ */
+        /*     // FIXME - add diff alarm condition */
+        /*     alarm_raised = NON_CYCLING; */
+        /* } */
+        // low-pressure alarm
+        else if (p_min < THRESH_LP){
+            alarm_raised = ALARM_LP;
+            alarm_code = "LP";
+            alarm_value = p_min;
         }
-        if (p_max < (p_min * ALARM_RATIO)){
-            // FIXME - add ratio alarm condition
-            alarm_raised = NON_CYCLING;
+        else if (p_max > THRESH_HP){
+            alarm_raised = ALARM_HP;
+            alarm_code = "HP";
+            alarm_value = p_max;
         }
-        if ((p_max - p_min) < ALARM_DIFF){
-            // FIXME - add diff alarm condition
-            alarm_raised = NON_CYCLING;
+        else if (respiration_rate > THRESH_HR) {
+            alarm_raised = ALARM_HR;
+            alarm_code = "Hr";
+            alarm_value = respiration_rate;
         }
-        if (p_max > ALARM_MAX){
-            alarm_raised = HIGH_PRESSURE;
-        }
-        if (p_min < ALARM_MIN){
-            alarm_raised = LOW_PRESSURE;
+        else if (respiration_rate < THRESH_LR) {
+            alarm_raised = ALARM_LR;
+            alarm_code = "Lr";
+            alarm_value = respiration_rate;
         }
     }
 
     // enable alarms after 5 seconds
-    if (alarm_counter > 5 * SAMPLE_RATE) {
+    if (alarm_disabled && alarm_counter > 5 * SAMPLE_RATE) {
         alarm_disabled = false;
+        alarm_counter = 0;
     } else {
         alarm_counter++;
     }
