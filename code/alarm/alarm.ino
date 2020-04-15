@@ -3,15 +3,12 @@
 // 2020-04-09
 
 #include <stdlib.h>
-#include <stdbool.h>
 #include <unistd.h>
 #include <stdint.h>
 #include <string.h>
+#include "config.h"
 
 // ----- Config -----
-
-// pressure sensor sample rate, should divide 1000 evenly
-#define SAMPLE_RATE 100
 
 // pin configuration
 const uint8_t PIN_MODE = 2;
@@ -23,7 +20,7 @@ const byte digit_pins[] = {A4, A2, A0, 11, 10};
 const byte segment_pins[] = {6, 12, 7, A1, A3, 8, 9, 5};
 
 // buzzer volume
-const uint8_t volume = 5;
+const uint8_t volume = 0;
 
 // button debounce time, milliseconds
 const uint16_t debounce_time = 200;
@@ -177,11 +174,11 @@ void loop() {
         else if (mode == MODE_SET_THRESH_LR) {
             // change alarm setting
             if (up_pressed) {
-                THRESH_LP = limit(THRESH_LR, 0, 97) + 2;
+                THRESH_LR = limit(THRESH_LR, 0, 97) + 2;
                 up_pressed = false;
             }
             else if (down_pressed) {
-                THRESH_LP = limit(THRESH_LR, 2, 99) - 2;
+                THRESH_LR = limit(THRESH_LR, 2, 99) - 2;
                 down_pressed = false;
             }
             // flash alarm setting

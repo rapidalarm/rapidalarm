@@ -1,20 +1,4 @@
-// ----- Types -----
-
-// alarm types
-typedef enum {
-    // no alarm
-    ALARM_NONE,
-    // ventilator not cycling
-    ALARM_NC,
-    // PEEP below threshold
-    ALARM_LP,
-    // PIP above threshold
-    ALARM_HP,
-    // respiratory rate below threshold
-    ALARM_LR,
-    // respiratory rate above threshold
-    ALARM_HR
-} alarm_t;
+#include "algorithm.h"
 
 // ----- Algorithm State -----
 
@@ -22,21 +6,22 @@ typedef enum {
 alarm_t alarm_raised = ALARM_NONE;
 // display code for raised alarm
 char *alarm_code = "  ";
+// disable alarm for N seconds when system turned on
+bool alarm_disabled = true;
+// value that caused alarm to be raised
 float alarm_value = 0;
+// recursive filter max/min pressure readings
+float p_max = 0;
+float p_min = 100;
+// breath respiration_rate (breaths/min)
+uint16_t respiration_rate = 0;
 // number of samples since last PEEP attack sample
 uint16_t last_peep = 0;
 // number of samples since last PIP attack sample
 uint16_t last_pip = 0;
-// disable alarm for N seconds when system turned on
-bool alarm_disabled = true;
 uint16_t alarm_counter = 0;
 bool reached_min = false;
 uint16_t last_first_max = 0;
-// breath respiration_rate (breaths/min)
-uint16_t respiration_rate = 0;
-// recursive filter max/min pressure readings
-float p_max = 0;
-float p_min = 100;
 
 // ----- Config -----
 
@@ -49,8 +34,8 @@ uint16_t THRESH_LP = 2; // cm H20
 uint16_t THRESH_HP = 40; // cm H20
 uint16_t THRESH_LR = 6; // breaths/min
 uint16_t THRESH_HR = 35; // breaths/min
-/* uint16_t ALARM_RATIO = 1.5; */
-/* uint16_t ALARM_DIFF = 86; */
+/* uint16_t THRESH_RATIO = 1.5; */
+/* uint16_t THRESH_DIFF = 86; */
 
 // ----- Functions -----
 
