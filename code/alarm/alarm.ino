@@ -121,11 +121,11 @@ void loop() {
             // change displayed metric every few seconds
             if (counter < counter_max / 3) {
                 // PIP
-                sprintf(displayedValue, "PI:%2d", (uint8_t) limit(p_max, 0, 99));
+                sprintf(displayedValue, "PI:%2d", (uint8_t) limit(display_pip, 0, 99));
             }
             else if (counter < 2 * counter_max / 3) {
                 // PEEP
-                sprintf(displayedValue, "PE:%2d", (uint8_t) limit(p_min, 0, 99));
+                sprintf(displayedValue, "PE:%2d", (uint8_t) limit(display_peep, 0, 99));
             }
             else {
                 // rate
