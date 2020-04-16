@@ -35,6 +35,7 @@ float p_max = 25;
 float p_min = 10;
 
 // ---- Outputs -----
+
 // whether there is an alarm condition
 alarm_t alarm_raised = ALARM_NONE;
 // display code for raised alarm
@@ -50,7 +51,7 @@ uint16_t respiration_rate = 15;
 
 const float ATTACK_COEFF = .9;
 const float RELEASE_COEFF = .999;
-const float DISPLAY_SMOOTH = 0.5;
+const float SMOOTH_COEFF = 0.5;
 const float ALARM_RATIO = 1.3;
 const float ALARM_DIFF = 3;
 
@@ -79,7 +80,7 @@ void run_algorithm(float p) {
             breath_state = true;
 
             // Update displayed PEEP based on last peak
-            display_peep = DISPLAY_SMOOTH*display_peep + (1-DISPLAY_SMOOTH)*last_peep_value;
+            display_peep = DISPLAY_SMOOTH * display_peep + (1-DISPLAY_SMOOTH) * last_peep_value;
         }
     }
     // if current sample is PIP release
@@ -93,20 +94,21 @@ void run_algorithm(float p) {
         last_peep = 0;
         last_peep_value = p;
         if (breath_state && (time_since_last_breath > 1)) {
-          // Exhalation state
-          breath_state = false;
-          
-          // Update displayed PIP based on previous max value
-          display_pip = DISPLAY_SMOOTH*display_pip + (1-DISPLAY_SMOOTH)*last_pip_value;
+            // Exhalation state
+            breath_state = false;
 
-          // Calculate breathing rate
-          new_breath_time = time_since_last_breath - last_pip;
-          time_since_last_breath = last_pip;
-          if (new_breath_time > (SAMPLE_RATE*THRESH_NC)) { // Cap breath time to keep average in reasonable range when non-cycling
-            new_breath_time = SAMPLE_RATE*THRESH_NC; // min(new_breath_time,max allowable breath time)
-          }
-          avg_breath_time = DISPLAY_SMOOTH*avg_breath_time + (1-DISPLAY_SMOOTH)*new_breath_time;
-          respiration_rate = 60*SAMPLE_RATE/avg_breath_time;
+            // Update displayed PIP based on previous max value
+            display_pip = DISPLAY_SMOOTH * display_pip + (1 - DISPLAY_SMOOTH) * last_pip_value;
+
+            // Calculate breathing rate
+            new_breath_time = time_since_last_breath - last_pip;
+            time_since_last_breath = last_pip;
+            // Cap breath time to keep average in reasonable range when non-cycling
+            if (new_breath_time > (SAMPLE_RATE * THRESH_NC)) {
+                new_breath_time = SAMPLE_RATE * THRESH_NC; // min(new_breath_time,max allowable breath time)
+            }
+            avg_breath_time = SMOOTH_COEFF * avg_breath_time + (1 - DISPLAY_SMOOTH) * new_breath_time;
+            respiration_rate = 60 * SAMPLE_RATE / avg_breath_time;
         }
     }
     // if current sample is PEEP release
@@ -121,21 +123,13 @@ void run_algorithm(float p) {
         // non-cycling alarm
         if (
             last_pip > SAMPLE_RATE * THRESH_NC ||
-            last_peep > SAMPLE_RATE * THRESH_NC
+            last_peep > SAMPLE_RATE * THRESH_NC ||
+            p_max / p_min < ALARM_RATIO ||
+            p_max - p_min < ALARM_DIFF
             ){
             alarm_raised = ALARM_NC;
             alarm_code = "nc";
-            alarm_value = (SAMPLE_RATE * THRESH_NC) / 1000;
-        }
-        else if (p_max < (p_min * ALARM_RATIO)){
-             alarm_raised = ALARM_NC;
-             alarm_code = "nc";
-             alarm_value = 11;
-         }
-        else if ((p_max - p_min) < ALARM_DIFF){
-             alarm_raised = ALARM_NC;
-             alarm_code = "nc";
-             alarm_value = 11;
+            alarm_value = "  ";
         }
         // low-pressure alarm
         else if (p_min < THRESH_LP){
@@ -143,16 +137,19 @@ void run_algorithm(float p) {
             alarm_code = "LP";
             alarm_value = p_min;
         }
+        // high-pressure alarm
         else if (p_max > THRESH_HP){
             alarm_raised = ALARM_HP;
             alarm_code = "HP";
             alarm_value = p_max;
         }
+        // high-rate alarm
         else if (respiration_rate > THRESH_HR) {
             alarm_raised = ALARM_HR;
             alarm_code = "Hr";
             alarm_value = respiration_rate;
         }
+        // low-rate alarm
         else if (respiration_rate < THRESH_LR) {
             alarm_raised = ALARM_LR;
             alarm_code = "Lr";
