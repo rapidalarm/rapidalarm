@@ -11,7 +11,7 @@
 // ----- Config -----
 
 // pressure sensor sample rate, should divide 1000 evenly
-#define SAMPLE_RATE 100
+const uint8_t SAMPLE_RATE = 100;
 
 // pin configuration
 const uint8_t PIN_MODE = 2;
@@ -112,7 +112,7 @@ void loop() {
         if (mode == 0) {
             p = ADC2CM((float) analogRead(PIN_PRES));
 
-            run_algorithm(p);
+            run_algorithm(p, SAMPLE_RATE);
 
             if(alarm_raised) {
                 mode = MODE_ALARM;
