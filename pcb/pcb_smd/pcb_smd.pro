@@ -1,4 +1,4 @@
-update=Sat 11 Apr 2020 08:57:01 PM CDT
+update=Fri 17 Apr 2020 06:24:09 PM CDT
 version=1
 last_client=kicad
 [general]
@@ -251,3 +251,19 @@ dPairGap=0.25
 dPairViaGap=0.25
 [ModEditFrame]
 version=1
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=./
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceAjustPassiveValues=0
+LabSize=50
+ERC_WriteFile=0
+ERC_TestSimilarLabels=1
+ERC_CheckUniqueGlobalLabels=1
+ERC_CheckBusDriverConflicts=1
+ERC_CheckBusEntryConflicts=1
+ERC_CheckBusToBusConflicts=1
+ERC_CheckBusToNetConflicts=1
