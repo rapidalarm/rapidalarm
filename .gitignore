@@ -3,6 +3,7 @@
 
 # kicad
 **/gerbers/
+**/gerbers.zip
 **/*-bak
 # Temporary files
 **/*.000
