@@ -1,6 +1,14 @@
-# Rapidalarm - Low cost monitor for emergency COVID-19 ventilators
+# Illinois RapidAlarm: Emergency ventilator sensor and alarm system
 
-- [Project Website](http://rapidalarm.github.io)
+*Developed at the Grainger College of Engineering at the University of Illinois at Urbana-Champaign with support from Carle Health and Creative Thermal Solutions, Inc.*
+
+![Illinois RapidAlarm](https://raw.githubusercontent.com/rapidalarm/rapidalarm.github.io/master/pictures/labeled_photos.png)
+
+The Illinois RapidAlarm is a sensor and alarm module for use with emergency pressure-cycled ventilators such as the [Illinois RapidVent](https://rapidvent.grainger.illinois.edu/). More information and documentation is available at the [Illinois RapidAlarm project website](http://rapidalarm.github.io).
+
+2020 Copyright University of Illinois Board of Trustees. Software is licensed under the MIT License; all other designs and documentation are licensed under the CC BY 4.0 license: https://creativecommons.org/licenses/by/4.0/
+
+Please see the [legal disclaimer](https://rapidalarm.github.io/#!legal.md) on the project website.
 
 ### Repository Structure
 
