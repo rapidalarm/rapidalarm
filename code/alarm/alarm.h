@@ -23,6 +23,7 @@ typedef enum {
     // cycle through displayed metrics
     MODE_DISPLAY,
     // set alarm conditions
+    MODE_SET_THRESH_NC,
     MODE_SET_THRESH_LP,
     MODE_SET_THRESH_HP,
     MODE_SET_THRESH_LR,
@@ -30,8 +31,8 @@ typedef enum {
     // display raised alarm
     MODE_ALARM
 } mode_t;
-// button cycles through first 5 modes only
-const uint8_t total_modes = 5;
+// button cycles through first 6 modes only
+const uint8_t total_modes = 6;
 // current mode
 uint8_t mode = MODE_DISPLAY;
 

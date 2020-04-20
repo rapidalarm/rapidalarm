@@ -137,15 +137,33 @@ void loop() {
             }
 
         }
+        // edit non-cycling alarm condition
+        else if (mode == MODE_SET_THRESH_NC) {
+            // change alarm setting
+            if (up_pressed) {
+                THRESH_NC = limit(THRESH_NC, 0, 25) + 5;
+                up_pressed = false;
+            }
+            else if (down_pressed) {
+                THRESH_NC = limit(THRESH_NC, 5, 35) - 5;
+                down_pressed = false;
+            }
+            // flash alarm setting
+            if (counter % (SAMPLE_RATE / 2) > SAMPLE_RATE / 8) {
+                sprintf(displayedValue, "NC:%2d", THRESH_NC);
+            } else {
+                sprintf(displayedValue, "NC:  ");
+            }
+        }
         // edit low-pressure alarm condition
         else if (mode == MODE_SET_THRESH_LP) {
             // change alarm setting
             if (up_pressed) {
-                THRESH_LP = limit(THRESH_LP, 0, 97) + 2;
+                THRESH_LP = limit(THRESH_LP, 1, 19) + 1;
                 up_pressed = false;
             }
             else if (down_pressed) {
-                THRESH_LP = limit(THRESH_LP, 2, 99) - 2;
+                THRESH_LP = limit(THRESH_LP, 3, 21) - 1;
                 down_pressed = false;
             }
             // flash alarm setting
@@ -159,11 +177,11 @@ void loop() {
         else if (mode == MODE_SET_THRESH_HP) {
             // change alarm setting
             if (up_pressed) {
-                THRESH_HP = limit(THRESH_HP, 0, 97) + 2;
+                THRESH_HP = limit(THRESH_HP, 25, 85) + 5;
                 up_pressed = false;
             }
             else if (down_pressed) {
-                THRESH_HP = limit(THRESH_HP, 2, 99) - 2;
+                THRESH_HP = limit(THRESH_HP, 35, 95) - 5;
                 down_pressed = false;
             }
             // flash alarm setting
@@ -177,11 +195,11 @@ void loop() {
         else if (mode == MODE_SET_THRESH_LR) {
             // change alarm setting
             if (up_pressed) {
-                THRESH_LP = limit(THRESH_LR, 0, 97) + 2;
+                THRESH_LP = limit(THRESH_LR, 4, 14) + 1;
                 up_pressed = false;
             }
             else if (down_pressed) {
-                THRESH_LP = limit(THRESH_LR, 2, 99) - 2;
+                THRESH_LP = limit(THRESH_LR, 6, 16) - 1;
                 down_pressed = false;
             }
             // flash alarm setting
@@ -195,11 +213,11 @@ void loop() {
         else if (mode == MODE_SET_THRESH_HR) {
             // change alarm setting
             if (up_pressed) {
-                THRESH_HR = limit(THRESH_HR, 0, 97) + 2;
+                THRESH_HR = limit(THRESH_HR, 10, 55) + 5;
                 up_pressed = false;
             }
             else if (down_pressed) {
-                THRESH_HR = limit(THRESH_HR, 2, 99) - 2;
+                THRESH_HR = limit(THRESH_HR, 20, 65) - 5;
                 down_pressed = false;
             }
             // flash alarm setting

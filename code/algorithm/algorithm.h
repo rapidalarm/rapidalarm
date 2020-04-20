@@ -80,7 +80,7 @@ void run_algorithm(float p) {
             breath_state = true;
 
             // Update displayed PEEP based on last peak
-            display_peep = DISPLAY_SMOOTH * display_peep + (1-DISPLAY_SMOOTH) * last_peep_value;
+            display_peep = SMOOTH_COEFF * display_peep + (1- SMOOTH_COEFF) * last_peep_value;
         }
     }
     // if current sample is PIP release
@@ -98,7 +98,7 @@ void run_algorithm(float p) {
             breath_state = false;
 
             // Update displayed PIP based on previous max value
-            display_pip = DISPLAY_SMOOTH * display_pip + (1 - DISPLAY_SMOOTH) * last_pip_value;
+            display_pip = SMOOTH_COEFF * display_pip + (1 - SMOOTH_COEFF) * last_pip_value;
 
             // Calculate breathing rate
             new_breath_time = time_since_last_breath - last_pip;
@@ -107,7 +107,7 @@ void run_algorithm(float p) {
             if (new_breath_time > (SAMPLE_RATE * THRESH_NC)) {
                 new_breath_time = SAMPLE_RATE * THRESH_NC; // min(new_breath_time,max allowable breath time)
             }
-            avg_breath_time = SMOOTH_COEFF * avg_breath_time + (1 - DISPLAY_SMOOTH) * new_breath_time;
+            avg_breath_time = SMOOTH_COEFF * avg_breath_time + (1 - SMOOTH_COEFF) * new_breath_time;
             respiration_rate = 60 * SAMPLE_RATE / avg_breath_time;
         }
     }
@@ -129,7 +129,7 @@ void run_algorithm(float p) {
             ){
             alarm_raised = ALARM_NC;
             alarm_code = "nc";
-            alarm_value = "  ";
+            alarm_value = 0;
         }
         // low-pressure alarm
         else if (p_min < THRESH_LP){
