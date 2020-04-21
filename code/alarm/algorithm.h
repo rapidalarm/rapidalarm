@@ -1,3 +1,8 @@
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "config.h"
@@ -20,7 +25,7 @@ typedef enum {
     ALARM_HR
 } alarm_t;
 
-// ----- Algorithm Output -----
+// ----- Output -----
 
 // whether there is an alarm condition
 extern alarm_t alarm_raised;
@@ -30,11 +35,12 @@ extern char *alarm_code;
 extern bool alarm_disabled;
 // value that caused alarm to be raised
 extern float alarm_value;
-// recursive filter max/min pressure readings
-extern float p_max;
-extern float p_min;
 // breath respiration_rate (breaths/min)
 extern uint16_t respiration_rate;
+// peak inspiratory pressure (cm H20)
+extern float pip;
+// positive end expiratory pressure (cm H20)
+extern float peep;
 
 // ----- Config -----
 
@@ -49,3 +55,7 @@ extern uint16_t THRESH_HR; // breaths/min
 
 // take in single sample at SAMPLE_RATE and update algorithm state
 void run_algorithm(float p);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
