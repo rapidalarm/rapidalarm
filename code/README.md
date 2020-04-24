@@ -1,5 +1,5 @@
 ### Directory Structure
 
-- `alarm/` - monitor firmware
-- `algorithm/` - alarm algorithm
+- `firmware/` - monitor firmware
+- `python/` - alarm algorithm test suite
 - `data/` - test data

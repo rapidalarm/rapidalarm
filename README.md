@@ -6,8 +6,8 @@
 
 - `code/` - firmware for monitor ATMega, simulations
   - `data/` - labeled alarm test data from artificial lung
-  - `alarm/` - ATmega328 alarm firmware
-  - `algorithm/` - alarm algorithm implementation and test code
+  - `firmware/` - ATmega328 alarm firmware
+  - `python/` - alarm algorithm test suite
 - `cad/` - mechanical CAD files, enclosures, etc.
     - `enclosure_lasercut/` - enclosure design files for lasercutter
     - `enclosure_3dprint/` - enclosure design files for 3d printer
