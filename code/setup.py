@@ -13,7 +13,7 @@ setup(
     version="0.1",
     description="RapidAlarm simulation tools",
     long_description=open("README.md", "rt").read(),
-    url="https://github.com/wolever/python-cffi-example",
+    url="https://github.com/",
     author="Evan Widloski",
     author_email="evan@evanw.org",
     classifiers=[
@@ -21,14 +21,19 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
     # packages=find_packages(),
-    package_dir={'rapidalarm': 'python'},
+    packages=find_packages(),
     py_modules=['rapidalarm.rapidalarm', 'rapidalarm.algorithm'],
-    install_requires=["cffi>=1.0.0"],
     entry_points={
-        'console_scripts': ['rapidalarm = python.rapidalarm:main']
+        'console_scripts': ['rapidalarm = rapidalarm.rapidalarm:main']
     },
     setup_requires=["cffi>=1.0.0"],
     cffi_modules=[
-        "./python/build_algorithm.py:ffi",
+        "./rapidalarm/build_algorithm.py:ffi",
+    ],
+    install_requires=[
+        "cffi>=1.0.0",
+        "matplotlib",
+        "pandas",
+        "numpy"
     ],
 )

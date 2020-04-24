@@ -10,7 +10,7 @@ ffi = FFI()
 code_dir = Path(__file__).parent.parent
 source_file = code_dir.joinpath('firmware/algorithm.c').absolute()
 include_dir = code_dir.joinpath('firmware/').absolute()
-cdef = code_dir.joinpath('python/algorithm.cdef').absolute()
+cdef = code_dir.joinpath('rapidalarm/algorithm.cdef').absolute()
 
 # read in variable datatypes
 ffi.cdef(open(cdef, 'r').read())
