@@ -22,5 +22,9 @@ ffi.set_source(
     include_dirs=[include_dir],
 )
 
-if __name__ == '__main__':
+def build():
     ffi.compile(verbose=True)
+
+
+if __name__ == '__main__':
+    build()

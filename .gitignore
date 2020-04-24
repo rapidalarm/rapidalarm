@@ -3,6 +3,9 @@
 
 # python
 **/*.pyc
+/code/build
+**/*.egg-info
+**/__pycache__
 
 # kicad
 **/gerbers/
