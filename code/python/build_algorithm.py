@@ -17,7 +17,7 @@ ffi.cdef(open(cdef, 'r').read())
 
 # build shared object
 ffi.set_source(
-    "algorithm",
+    "rapidalarm.algorithm",
     open(source_file, 'r').read(),
     include_dirs=[include_dir],
 )

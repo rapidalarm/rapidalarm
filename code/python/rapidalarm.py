@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 import sys
 
-from ._algorithm import lib
+from rapidalarm.algorithm import lib
 
 
 def load_dataset(datafile):
@@ -49,8 +49,6 @@ def run_pandas(dataset):
     """
 
     df = load_dataset(dataset)
-
-    lib = build()
 
     pip, peep, rr, p_max, p_min = [], [], [], [], []
 

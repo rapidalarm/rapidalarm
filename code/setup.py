@@ -20,7 +20,9 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
-    packages=find_packages(),
+    # packages=find_packages(),
+    package_dir={'rapidalarm': 'python'},
+    py_modules=['rapidalarm.rapidalarm', 'rapidalarm.algorithm'],
     install_requires=["cffi>=1.0.0"],
     entry_points={
         'console_scripts': ['rapidalarm = python.rapidalarm:main']
