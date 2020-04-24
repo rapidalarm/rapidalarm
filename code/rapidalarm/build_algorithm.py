@@ -4,7 +4,6 @@
 from cffi import FFI
 from pathlib import Path
 
-
 ffi = FFI()
 
 code_dir = Path(__file__).parent.parent

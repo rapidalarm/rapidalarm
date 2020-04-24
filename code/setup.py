@@ -22,7 +22,13 @@ setup(
     ],
     # packages=find_packages(),
     packages=find_packages(),
-    py_modules=['rapidalarm.rapidalarm', 'rapidalarm.algorithm'],
+    package_data={'':[
+        'rapidalarm/algorithm.cdef',
+        'firmware/algorithm.c',
+        'firmware/algorithm.h'
+    ]},
+    include_package_data=True,
+    # py_modules=['rapidalarm.rapidalarm', 'rapidalarm.algorithm'],
     entry_points={
         'console_scripts': ['rapidalarm = rapidalarm.rapidalarm:main']
     },

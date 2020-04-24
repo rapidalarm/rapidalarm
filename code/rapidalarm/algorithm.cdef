@@ -52,5 +52,5 @@ void run_algorithm(float p);
 // ----- Private Variables for Debugging -----
 
 // recursive filter max/min pressure readings
-float p_max = 0;
-float p_min = 100;
+extern float p_max = 0;
+extern float p_min = 100;
