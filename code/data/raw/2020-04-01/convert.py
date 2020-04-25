@@ -1,0 +1,25 @@
+import pandas as pd
+import numpy as np
+from scipy.signal import resample
+
+for path in (
+        'exit_port_leak', 'first_test', 'lung_disconnect',
+        'lung_partial_disconnect', 'source_disconnect'
+    ):
+
+    data = np.loadtxt(path, '\t')
+    # resample 133Hz to 100Hz
+    data = resample(data, int((len(data) * 100) / 133))
+    df = pd.DataFrame(
+        {
+            'pressure': data[:, 1], # only second col contains valid information
+            'flow': None,
+            'pip': None,
+            'peep': None,
+            'rr': None
+        }
+    )
+
+    with open('../../' + path + '.csv', 'w') as f:
+        f.write('#samplerate,133\n')
+        df.to_csv(f, index=False, header=True)

@@ -3,6 +3,7 @@
 ### File structure
 
 - `raw/` - raw data recordings
+- `ventmap_0282.csv` - Human trial data converted from ventMAP
 
 ### CSV Format
 
@@ -17,9 +18,9 @@ e.g.
     10.51,9.18,20.57,10.879999999999999,14.084507042253522
     ...
 
-### Ventmap Data
+### ventMAP Data
 
-A lot of ventilator waveform data can be found in the [ventMAP project repo](https://github.com/hahnicity/ventMAP/tree/master/ventmap/tests/samples), albeit a bit disorganized.  
+A lot of human-trial ventilator waveform data can be found in the [ventMAP project repo](https://github.com/hahnicity/ventMAP/tree/master/ventmap/tests/samples), albeit a bit disorganized.  This includes waveforms from a few modes of ventilation.
 
 These recordings were made using the PB-840 ventilator at 50Hz.  You can use the `ventmap2csv.py` tool to convert these `.csv_test` files into the csv format used by the rapidalarm Python library.
 
