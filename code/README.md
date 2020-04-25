@@ -6,9 +6,11 @@
 
 ### Installation
 
+Clone this repo.  From the `code/` directory:
+
 Linux/OSX
 
-    pip install rapidalarm
+    pip install .
     
 Windows
 
