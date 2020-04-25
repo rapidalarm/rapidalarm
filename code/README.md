@@ -28,3 +28,5 @@ Alternatively you can import the library and do your own investigation
 
     >>> from rapidalarm.rapidalarm import run_pandas
     >>> df = run_pandas('data/ventmap_0282.csv')
+    
+![](plot.png)
