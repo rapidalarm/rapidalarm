@@ -21,7 +21,7 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
     # packages=find_packages(),
-    packages=find_packages(),
+    packages=['rapidalarm', 'firmware'],
     package_data={'':[
         'rapidalarm/algorithm.cdef',
         'firmware/algorithm.c',
