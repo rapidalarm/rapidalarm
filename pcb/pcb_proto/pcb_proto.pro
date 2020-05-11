@@ -1,4 +1,4 @@
-update=Fri 10 Apr 2020 02:41:10 PM CDT
+update=Fri 17 Apr 2020 05:24:26 PM CDT
 version=1
 last_client=kicad
 [general]
@@ -32,9 +32,25 @@ NetIExt=net
 version=1
 LibDir=
 [eeschema/libraries]
-[ModEditFrame]
-version=1
 [LibeditFrame]
 version=1
 [SchematicFrame]
 version=1
+[ModEditFrame]
+version=1
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=./
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceAjustPassiveValues=0
+LabSize=50
+ERC_WriteFile=0
+ERC_TestSimilarLabels=1
+ERC_CheckUniqueGlobalLabels=1
+ERC_CheckBusDriverConflicts=1
+ERC_CheckBusEntryConflicts=1
+ERC_CheckBusToBusConflicts=1
+ERC_CheckBusToNetConflicts=1

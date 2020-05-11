@@ -1,0 +1,3 @@
+include rapidalarm/algorithm.cdef
+include firmware/algorithm.c
+include firmware/algorithm.h

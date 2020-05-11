@@ -1,0 +1,77 @@
+// ----- Types -----
+
+// alarm types
+typedef enum {
+    // no alarm
+    ALARM_NONE,
+    // ventilator not cycling
+    ALARM_NC,
+    // PEEP below threshold
+    ALARM_LP,
+    // PIP above threshold
+    ALARM_HP,
+    // respiratory rate below threshold
+    ALARM_LR,
+    // respiratory rate above threshold
+    ALARM_HR
+} alarm_t;
+
+// ----- Output -----
+
+// whether there is an alarm condition
+extern alarm_t alarm_raised;
+// display code for raised alarm
+extern char *alarm_code;
+// disable alarm for N seconds when system turned on
+extern bool alarm_disabled;
+// value that caused alarm to be raised
+extern float alarm_value;
+// breath respiration_rate (breaths/min)
+extern uint16_t respiration_rate;
+// peak inspiratory pressure (cm H20)
+extern float pip;
+// positive end expiratory pressure (cm H20)
+extern float peep;
+
+// ----- Config -----
+
+// alarm condition thresholds
+extern uint16_t THRESH_NC; // s
+extern uint16_t THRESH_LP; // cm H20
+extern uint16_t THRESH_HP; // cm H20
+extern uint16_t THRESH_LR; // breaths/min
+extern uint16_t THRESH_HR; // breaths/min
+
+// ----- Functions -----
+
+// compute samplerate dependent weights
+void init_algorithm(uint8_t sample_rate);
+// take in single sample at SAMPLE_RATE and update algorithm state
+void run_algorithm(float p);
+
+// ----- Private Variables for Debugging -----
+
+// recursive filter max/min pressure readings
+extern float p_max = 0;
+extern float p_min = 100;
+extern float ATTACK_COEFF;
+extern float RELEASE_COEFF;
+
+// disable alarm for N seconds when system turned on
+extern bool alarm_disabled;
+// recursive filter max/min pressure readings
+extern float p_max;
+extern float p_min;
+// number of samples since last PIP attack sample
+extern uint16_t last_pip;
+// number of samples since last PEEP attack sample
+extern uint16_t last_peep;
+// store previous pip, peep output for smoothing filter
+extern float last_pip_value;
+extern float last_peep_value;
+// whether current sample is on inhale or exhale
+extern bool inhalation;
+
+extern uint16_t alarm_counter;
+extern uint16_t time_since_last_breath;
+extern uint16_t new_breath_time;

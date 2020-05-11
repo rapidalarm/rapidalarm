@@ -1,8 +1,15 @@
 **/*mp4
 **/*kdenlive
 
+# python
+**/*.pyc
+/code/build
+**/*.egg-info
+**/__pycache__
+
 # kicad
 **/gerbers/
+**/gerbers.zip
 **/*-bak
 # Temporary files
 **/*.000
@@ -14,7 +21,13 @@
 **/*.tmp
 **/*-save.pro
 **/*-save.kicad_pcb
+**/*-cache.lib
 **/*fp-info-cache
+**/*.net
+
+**/*.o
+**/*.so
+**/*.dll
 
 gui/keystore
 gui/bin
