@@ -41,6 +41,7 @@ void update_display() {
   if(now < nextDisplayUpdate) {
     return;
   }
+  // FIXME overflow
   nextDisplayUpdate = 4 + now;
   digitalWrite(digit_pins[display_index], LOW);
   display_index++;
