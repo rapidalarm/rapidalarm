@@ -25,6 +25,7 @@
 **/*fp-info-cache
 **/*.net
 
+**/*.out
 **/*.o
 **/*.so
 **/*.dll
