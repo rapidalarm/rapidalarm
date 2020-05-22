@@ -45,6 +45,7 @@ bool inhalation = false;
 uint16_t alarm_counter = 0;
 uint16_t t_peak = 0;
 uint16_t new_breath_time;
+float avg_breath_time;
 
 // ----- Config -----
 
@@ -61,7 +62,7 @@ const float SMOOTH_COEFF = 0.5;
 // alarm condition thresholds
 uint16_t THRESH_NC = 10; // s
 uint16_t THRESH_LP = 2; // cm H20
-uint16_t THRESH_HP = 40; // cm H20
+uint16_t THRESH_HP = 50; // cm H20
 uint16_t THRESH_LR = 6; // breaths/min
 uint16_t THRESH_HR = 35; // breaths/min
 const float THRESH_RATIO = 1.5;
@@ -106,28 +107,22 @@ void run_algorithm(float p) {
         v_min = p;
         t_low = 0;
 
-        if (inhalation) {
+        if (inhalation && (t_peak > 1)) {
             inhalation = false;
 
             // smooth pip display
             pip = SMOOTH_COEFF * pip + (1 - SMOOTH_COEFF) * v_max;
 
             // calculate breathing rate
-            /* new_breath_time = t_peak - t_high; */
-            /* t_peak = t_high; */
+            new_breath_time = t_peak - t_high;
+            t_peak = t_high;
 
             // cap breath time to keep average in reasonable range during non-cycling
-            /* if (new_breath_time > (SAMPLE_RATE * THRESH_NC)) { */
-            /*     new_breath_time = SAMPLE_RATE * THRESH_NC; */
-            /* } */
-            /* avg_breath_time = SMOOTH_COEFF * avg_breath_time + (1 - SMOOTH_COEFF) * new_breath_time; */
-            /* respiration_rate = 60 * SAMPLE_RATE / avg_breath_time; */
-
-            respiration_rate = (
-                SMOOTH_COEFF * respiration_rate +
-                (1 - SMOOTH_COEFF) * (60 * SAMPLE_RATE / (t_peak - t_high))
-            );
-
+            if (new_breath_time > (SAMPLE_RATE * THRESH_NC)) {
+                new_breath_time = SAMPLE_RATE * THRESH_NC;
+            }
+            avg_breath_time = SMOOTH_COEFF * avg_breath_time + (1 - SMOOTH_COEFF) * new_breath_time;
+            respiration_rate = 60 * SAMPLE_RATE / avg_breath_time;
         }
     }
     // if current sample is PEEP release

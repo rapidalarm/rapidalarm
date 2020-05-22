@@ -46,8 +46,6 @@ def load_pandas(dataset, rebuild=False, end=None):
     Returns:
         pandas.DataFrame: dataframe containing alg. input and results
     """
-    global lib
-
     df = load_dataset(dataset)
 
     if rebuild:
@@ -74,13 +72,15 @@ def load_pandas(dataset, rebuild=False, end=None):
         v_high.append(lib.v_high)
         v_low.append(lib.v_low)
         alarm_raised.append(alarms[lib.alarm_raised])
+        # alarm_raised.append(lib.alarm_raised)
 
     df['pip'] = pip
     df['peep'] = peep
     df['rr'] = rr
     df['v_high'] = v_high
     df['v_low'] = v_low
-    df['alarm_raised'] = pd.Categorical(alarm_raised, categories=alarms.values())
+    # df['alarm_raised'] = pd.Categorical(alarm_raised, categories=alarms.values())
+    df['alarm_raised'] = alarm_raised
 
     return df
 
@@ -95,46 +95,26 @@ def plot(args):
 
     df = load_pandas(args.dataset, args.rebuild)
 
-    plt.figure(figsize=(12, 4))
-    plt.subplot(2, 1, 1)
-    plt.plot(df.t[args.s:args.e], df.pressure[args.s:args.e], 'k', linewidth=0.5)
-    plt.plot(df.t[args.s:args.e], df.v_high[args.s:args.e], 'r', linewidth=0.5)
-    plt.plot(df.t[args.s:args.e], df.v_low[args.s:args.e], 'b', linewidth=0.5)
-    plt.legend(['Pressure', 'v_high', 'v_low'])
+    fig, [plt1, plt2, plt3] = plt.subplots(3, 1, sharex=True, figsize=(15, 6))
 
-    plt.subplot(2, 1, 2)
-    plt.plot(df.t[args.s:args.e], df.pip[args.s:args.e])
-    plt.plot(df.t[args.s:args.e], df.peep[args.s:args.e])
-    plt.plot(df.t[args.s:args.e], df.rr[args.s:args.e])
-    plt.grid(True)
+    plt1.plot(df.t[args.s:args.e], df.pressure[args.s:args.e], 'k', linewidth=0.5)
+    plt1.plot(df.t[args.s:args.e], df.v_high[args.s:args.e], 'r', linewidth=0.5)
+    plt1.plot(df.t[args.s:args.e], df.v_low[args.s:args.e], 'b', linewidth=0.5)
+    plt1.plot(df.t[args.s:args.e], df.pip[args.s:args.e], 'r')
+    plt1.plot(df.t[args.s:args.e], df.peep[args.s:args.e], 'b')
+    plt1.legend(['Pressure', 'High Envelope', 'Low Envelope', 'PIP', 'PEEP'])
 
-    plt.legend(['PIP', 'PEEP', 'RR'])
+    plt2.plot(df.t[args.s:args.e], df.rr[args.s:args.e], 'g')
+    plt2.set_ylabel('breaths/min')
+    plt2.legend(['RR'])
+    plt2.grid(True)
+
+
+    plt3.plot(df.t[args.s:args.e], df.alarm_raised[args.s:args.e])
+    plt3.grid(True)
+
     plt.xlabel('time (s)')
     plt.show()
-
-# def build():
-#     # build .c and return FFI library
-
-#     ffi = FFI()
-
-#     source_file = '../firmware/algorithm.c'
-#     include_dir = '../firmware/'
-#     types = 'algorithm.cdef'
-
-#     # read in variable datatypes
-#     ffi.cdef(open(types, 'r').read())
-
-#     # build shared object
-#     ffi.set_source(
-#         "algorithm",
-#         open(source_file, 'r').read(),
-#         include_dirs=[include_dir],
-#     )
-#     ffi.compile(verbose=True)
-
-#     from algorithm import lib
-
-#     return lib
 
 
 def main():
