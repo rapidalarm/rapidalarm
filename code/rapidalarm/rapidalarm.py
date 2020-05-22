@@ -50,8 +50,6 @@ def load_pandas(dataset, rebuild=False, end=None):
 
     df = load_dataset(dataset)
 
-    pip, peep, rr, p_max, p_min = [], [], [], [], []
-
     if rebuild:
         build()
 
@@ -59,20 +57,30 @@ def load_pandas(dataset, rebuild=False, end=None):
 
     lib.init_algorithm(df.sample_rate)
 
+    pip, peep, rr, v_high, v_low, alarm_raised = [], [], [], [], [], []
+
+    # build dict from enums
+    alarms = [
+        'ALARM_HP', 'ALARM_HR', 'ALARM_LP', 'ALARM_LR', 'ALARM_NC', 'ALARM_NONE'
+    ]
+    alarms = {getattr(lib, s):s for s in alarms}
+
     for p in df.pressure[:end]:
         lib.run_algorithm(p)
 
         pip.append(lib.pip)
         peep.append(lib.peep)
         rr.append(lib.respiration_rate)
-        p_max.append(lib.p_max)
-        p_min.append(lib.p_min)
+        v_high.append(lib.v_high)
+        v_low.append(lib.v_low)
+        alarm_raised.append(alarms[lib.alarm_raised])
 
     df['pip'] = pip
     df['peep'] = peep
     df['rr'] = rr
-    df['p_max'] = p_max
-    df['p_min'] = p_min
+    df['v_high'] = v_high
+    df['v_low'] = v_low
+    df['alarm_raised'] = pd.Categorical(alarm_raised, categories=alarms.values())
 
     return df
 
@@ -87,13 +95,20 @@ def plot(args):
 
     df = load_pandas(args.dataset, args.rebuild)
 
-    plt.plot(df.t[args.s:args.e], df.pressure[args.s:args.e])
+    plt.figure(figsize=(12, 4))
+    plt.subplot(2, 1, 1)
+    plt.plot(df.t[args.s:args.e], df.pressure[args.s:args.e], 'k', linewidth=0.5)
+    plt.plot(df.t[args.s:args.e], df.v_high[args.s:args.e], 'r', linewidth=0.5)
+    plt.plot(df.t[args.s:args.e], df.v_low[args.s:args.e], 'b', linewidth=0.5)
+    plt.legend(['Pressure', 'v_high', 'v_low'])
+
+    plt.subplot(2, 1, 2)
     plt.plot(df.t[args.s:args.e], df.pip[args.s:args.e])
     plt.plot(df.t[args.s:args.e], df.peep[args.s:args.e])
-    plt.plot(df.t[args.s:args.e], df.p_max[args.s:args.e])
-    plt.plot(df.t[args.s:args.e], df.p_min[args.s:args.e])
+    plt.plot(df.t[args.s:args.e], df.rr[args.s:args.e])
+    plt.grid(True)
 
-    plt.legend(['pressure', 'pip', 'peep', 'p_max', 'p_min'])
+    plt.legend(['PIP', 'PEEP', 'RR'])
     plt.xlabel('time (s)')
     plt.show()
 

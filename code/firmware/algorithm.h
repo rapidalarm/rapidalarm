@@ -34,7 +34,7 @@ extern bool alarm_disabled;
 // value that caused alarm to be raised
 extern float alarm_value;
 // breath respiration_rate (breaths/min)
-extern uint16_t respiration_rate;
+extern float respiration_rate;
 // peak inspiratory pressure (cm H20)
 extern float pip;
 // positive end expiratory pressure (cm H20)

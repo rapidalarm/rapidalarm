@@ -28,7 +28,6 @@ typedef enum {
     MODE_SET_THRESH_HP,
     MODE_SET_THRESH_LR,
     MODE_SET_THRESH_HR,
-    MODE_SET_THRESH_NC,
     // display raised alarm
     MODE_ALARM
 } mode_t;
