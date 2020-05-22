@@ -56,6 +56,7 @@ def load_pandas(dataset, rebuild=False, end=None):
     lib.init_algorithm(df.sample_rate)
 
     pip, peep, rr, v_high, v_low, alarm_raised = [], [], [], [], [], []
+    debug = []
 
     # build dict from enums
     alarms = [
@@ -73,6 +74,7 @@ def load_pandas(dataset, rebuild=False, end=None):
         v_low.append(lib.v_low)
         alarm_raised.append(alarms[lib.alarm_raised])
         # alarm_raised.append(lib.alarm_raised)
+        debug.append(lib.t_peak)
 
     df['pip'] = pip
     df['peep'] = peep
@@ -81,6 +83,7 @@ def load_pandas(dataset, rebuild=False, end=None):
     df['v_low'] = v_low
     # df['alarm_raised'] = pd.Categorical(alarm_raised, categories=alarms.values())
     df['alarm_raised'] = alarm_raised
+    df['debug'] = debug
 
     return df
 
@@ -104,7 +107,8 @@ def plot(args):
     plt1.plot(df.t[args.s:args.e], df.peep[args.s:args.e], 'b')
     plt1.legend(['Pressure', 'High Envelope', 'Low Envelope', 'PIP', 'PEEP'])
 
-    plt2.plot(df.t[args.s:args.e], df.rr[args.s:args.e], 'g')
+    plt2.plot(df.t[args.s:args.e], df.rr[args.s:args.e])
+    # plt2.plot(df.t[args.s:args.e], df.debug[args.s:args.e])
     plt2.set_ylabel('breaths/min')
     plt2.legend(['RR'])
     plt2.grid(True)
