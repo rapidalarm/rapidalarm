@@ -17,6 +17,8 @@ e.g.
     10.55,5.36,20.57,10.879999999999999,14.084507042253522
     10.51,9.18,20.57,10.879999999999999,14.084507042253522
     ...
+    
+`pip`, `peep`, `rr` refer to reported values from the professional ventilator.  Only available in the ventmap datasets.
 
 ### ventMAP Data
 
@@ -24,4 +26,4 @@ A lot of human-trial ventilator waveform data can be found in the [ventMAP proje
 
 These recordings were made using the PB-840 ventilator at 50Hz.  You can use the `ventmap2csv.py` tool to convert these `.csv_test` files into the csv format used by the rapidalarm Python library.
 
-    python ventmap2csv.py input.csv_test output.csv
+    python ventmap2csv.py raw/ventmap/0282dbl_diff.csv_test ventmap_0282.csv
