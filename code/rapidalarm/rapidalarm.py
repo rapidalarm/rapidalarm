@@ -2,13 +2,9 @@
 # Evan Widloski - 2020-04-15
 # Automated testing for alarm/algorithm.h
 
-# Build alarm/algorithm.so with:
-   # gcc -g -o algorithm.so -shared -fPIC algorithm.h
-
 from cffi import FFI
 import argparse
 import logging
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import sys
@@ -94,31 +90,49 @@ def csv(args):
 
     df.to_csv(sys.stdout, index=False)
 
+
 def plot(args):
+    """Run prerecorded waveform through algorithm.  Plot time range."""
+    import matplotlib.pyplot as plt
 
     df = load_pandas(args.dataset, args.rebuild)
 
-    fig, [plt1, plt2, plt3] = plt.subplots(3, 1, sharex=True, figsize=(15, 6))
+    fig, [plt1, plt2, plt3, plt4] = plt.subplots(4, 1, sharex=True, figsize=(15, 6))
 
     plt1.plot(df.t[args.s:args.e], df.pressure[args.s:args.e], 'k', linewidth=0.5)
     plt1.plot(df.t[args.s:args.e], df.v_high[args.s:args.e], 'r', linewidth=0.5)
     plt1.plot(df.t[args.s:args.e], df.v_low[args.s:args.e], 'b', linewidth=0.5)
-    plt1.plot(df.t[args.s:args.e], df.pip[args.s:args.e], 'r')
-    plt1.plot(df.t[args.s:args.e], df.peep[args.s:args.e], 'b')
-    plt1.legend(['Pressure', 'High Envelope', 'Low Envelope', 'PIP', 'PEEP'])
+    # plt1.plot(df.t[args.s:args.e], df.pip[args.s:args.e], 'r')
+    # plt1.plot(df.t[args.s:args.e], df.peep[args.s:args.e], 'b')
+    plt1.legend(['Pressure', 'High Envelope', 'Low Envelope'])
 
-    plt2.plot(df.t[args.s:args.e], df.rr[args.s:args.e])
-    # plt2.plot(df.t[args.s:args.e], df.debug[args.s:args.e])
-    plt2.set_ylabel('breaths/min')
-    plt2.legend(['RR'])
-    plt2.grid(True)
+    plt2.plot(df.t[args.s:args.e], df.pressure[args.s:args.e], 'k', linewidth=0.5)
+    plt2.plot(df.t[args.s:args.e], df.true_pip[args.s:args.e], 'r', linewidth=0.5)
+    plt2.plot(df.t[args.s:args.e], df.true_peep[args.s:args.e], 'b', linewidth=0.5)
+    plt2.plot(df.t[args.s:args.e], df.pip[args.s:args.e], 'r')
+    plt2.plot(df.t[args.s:args.e], df.peep[args.s:args.e], 'b')
+    plt2.legend(['Pressure', 'True PIP', 'True PEEP', 'PIP', 'PEEP'])
 
-
-    plt3.plot(df.t[args.s:args.e], df.alarm_raised[args.s:args.e])
+    plt3.plot(df.t[args.s:args.e], df.rr[args.s:args.e], 'b')
+    plt3.plot(df.t[args.s:args.e], df.true_rr[args.s:args.e], 'b', linewidth=0.5)
+    # plt3.plot(df.t[args.s:args.e], df.debug[args.s:args.e])
+    plt3.set_ylabel('breaths/min')
+    plt3.legend(['RR', 'True RR'])
     plt3.grid(True)
+
+
+    plt4.plot(df.t[args.s:args.e], df.alarm_raised[args.s:args.e])
+    plt4.grid(True)
 
     plt.xlabel('time (s)')
     plt.show()
+
+    return plt1, plt2, plt3
+
+
+def stat(args):
+    """Show algorithm accuracy statistics"""
+    pass
 
 
 def main():
