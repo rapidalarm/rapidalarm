@@ -22,7 +22,10 @@ ffi.set_source(
 )
 
 def build():
-    ffi.compile(verbose=True)
+    ffi.compile(
+        verbose=True,
+        tmpdir=code_dir
+    )
 
 
 if __name__ == '__main__':
