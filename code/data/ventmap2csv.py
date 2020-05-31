@@ -46,7 +46,7 @@ with open(args.outfile, 'w') as f:
     # write samplerate as metadata header
     f.write("#samplerate,{}\n".format(args.r))
     # write column header
-    f.write("pressure,flow,pip,peep,rr\n")
+    f.write("pressure,flow,true_pip,true_peep,true_rr\n")
 
     for x in zip(pressure, flow, pip, peep, rr):
         f.write(",".join(map(str, x)) + "\n")

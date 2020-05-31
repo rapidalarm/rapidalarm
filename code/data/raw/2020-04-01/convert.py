@@ -15,9 +15,9 @@ for path in (
         {
             'pressure': data[:, 1], # only second col contains valid information
             'flow': None,
-            'pip': None,
-            'peep': None,
-            'rr': None
+            'true_pip': None,
+            'true_peep': None,
+            'true_rr': None
         }
     )
 

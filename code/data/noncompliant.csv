@@ -1,5 +1,5 @@
 #samplerate,100
-pressure,flow,pip,peep,rr
+pressure,flow,true_pip,true_peep,true_rr
 14.720148437499999,,,,
 15.052082031249999,,,,
 15.162726562499998,,,,

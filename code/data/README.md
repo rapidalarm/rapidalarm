@@ -12,13 +12,13 @@ The first two lines of the CSV file contain information about sample rate and co
 e.g.
 
     #samplerate,50
-    pressure,flow,pip,peep,rr
+    pressure,flow,true_pip,true_peep,true_rr
     10.57,3.44,20.57,10.879999999999999,14.084507042253522
     10.55,5.36,20.57,10.879999999999999,14.084507042253522
     10.51,9.18,20.57,10.879999999999999,14.084507042253522
     ...
     
-`pip`, `peep`, `rr` refer to reported values from the professional ventilator.  Only available in the ventmap datasets.
+`true_pip`, `true_peep`, `true_rr` refer to reported values from the professional ventilator.  Only available in the ventmap datasets.
 
 ### ventMAP Data
 
