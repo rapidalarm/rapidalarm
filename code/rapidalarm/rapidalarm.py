@@ -102,29 +102,41 @@ def plot(args):
     plt1.plot(df.t[args.s:args.e], df.pressure[args.s:args.e], 'k', linewidth=0.5)
     plt1.plot(df.t[args.s:args.e], df.v_high[args.s:args.e], 'r', linewidth=0.5)
     plt1.plot(df.t[args.s:args.e], df.v_low[args.s:args.e], 'b', linewidth=0.5)
-    # plt1.plot(df.t[args.s:args.e], df.pip[args.s:args.e], 'r')
-    # plt1.plot(df.t[args.s:args.e], df.peep[args.s:args.e], 'b')
-    plt1.legend(['Pressure', 'High Envelope', 'Low Envelope'])
+    plt1.legend(
+        ['Pressure', 'High Envelope', 'Low Envelope'],
+        loc='center left',
+        bbox_to_anchor=[1, .5]
+    )
+    plt1.grid(True)
 
     plt2.plot(df.t[args.s:args.e], df.pressure[args.s:args.e], 'k', linewidth=0.5)
     plt2.plot(df.t[args.s:args.e], df.true_pip[args.s:args.e], 'r', linewidth=0.5)
     plt2.plot(df.t[args.s:args.e], df.true_peep[args.s:args.e], 'b', linewidth=0.5)
     plt2.plot(df.t[args.s:args.e], df.pip[args.s:args.e], 'r')
     plt2.plot(df.t[args.s:args.e], df.peep[args.s:args.e], 'b')
-    plt2.legend(['Pressure', 'True PIP', 'True PEEP', 'PIP', 'PEEP'])
+    plt2.legend(
+        ['Pressure', 'True PIP', 'True PEEP', 'PIP', 'PEEP'],
+        loc='center left',
+        bbox_to_anchor=[1, .5]
+    )
+    plt2.grid(True)
 
     plt3.plot(df.t[args.s:args.e], df.rr[args.s:args.e], 'b')
     plt3.plot(df.t[args.s:args.e], df.true_rr[args.s:args.e], 'b', linewidth=0.5)
     # plt3.plot(df.t[args.s:args.e], df.debug[args.s:args.e])
     plt3.set_ylabel('breaths/min')
-    plt3.legend(['RR', 'True RR'])
+    plt3.legend(
+        ['RR', 'True RR'],
+        loc='center left',
+        bbox_to_anchor=[1, .5]
+    )
     plt3.grid(True)
-
 
     plt4.plot(df.t[args.s:args.e], df.alarm_raised[args.s:args.e])
     plt4.grid(True)
 
     plt.xlabel('time (s)')
+    plt.tight_layout()
     plt.show()
 
     return plt1, plt2, plt3
@@ -132,7 +144,23 @@ def plot(args):
 
 def stat(args):
     """Show algorithm accuracy statistics"""
-    pass
+
+    df = load_pandas(args.dataset, args.rebuild)[args.s:args.e]
+
+    rr_err = df.rr - df.true_rr
+    pip_err = df.pip - df.true_pip
+    peep_err = df.peep - df.true_peep
+
+    print('RR\n-----')
+    print(f'err mean:{rr_err.mean():.2f}')
+    print(f'err std:{rr_err.std():.2f}')
+    print('\nPIP\n-----')
+    print(f'err mean:{pip_err.mean():.2f}')
+    print(f'err std:{pip_err.std():.2f}')
+    print('\nPEEP\n-----')
+    print(f'err mean:{peep_err.mean():.2f}')
+    print(f'err std:{peep_err.std():.2f}')
+
 
 
 def main():
@@ -155,6 +183,12 @@ def main():
     plot_parser.add_argument('-s', metavar='START', type=int, default=0, help="simulation start sample num")
     plot_parser.add_argument('-e', metavar='END', type=int, default=None, help="simulation end sample num")
     plot_parser.set_defaults(func=plot)
+
+    stat_parser = subparsers.add_parser('stat', help="algorithm accuracy statistics for dataset")
+    stat_parser.add_argument('dataset', type=str, help="path to dataset")
+    stat_parser.add_argument('-s', metavar='START', type=int, default=0, help="simulation start sample num")
+    stat_parser.add_argument('-e', metavar='END', type=int, default=None, help="simulation end sample num")
+    stat_parser.set_defaults(func=stat)
 
     args = parser.parse_args()
 
