@@ -1,4 +1,4 @@
-update=Fri 19 Jun 2020 11:15:34 AM CDT
+update=Wed 01 Jul 2020 06:27:46 PM CDT
 version=1
 last_client=kicad
 [general]
@@ -13,8 +13,6 @@ version=1
 LibDir=
 [eeschema/libraries]
 [LibeditFrame]
-version=1
-[SchematicFrame]
 version=1
 [schematic_editor]
 version=1
@@ -271,3 +269,5 @@ uViaDrill=0.1
 dPairWidth=0.2
 dPairGap=0.25
 dPairViaGap=0.25
+[SchematicFrame]
+version=1
