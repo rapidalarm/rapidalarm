@@ -21,4 +21,4 @@ Please see the [legal disclaimer](https://rapidalarm.github.io/#!legal.md) on th
     - `enclosure_3dprint/` - enclosure design files for 3d printer
 - `pcb/` - KiCAD design files
   - `pcb_proto/` - through hole board variant, based on ATmega328
-  - `pcb_dip/` - surface mount board variant, based on ATmega32u4
+  - `pcb_smd/` - surface mount board variant, based on ATmega32u4
